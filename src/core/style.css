@@ -170,7 +170,9 @@ body[data-quran="off"] .verse-hidden-note{display:block}
    villain's colour. A destructive action gets a charcoal outline instead — and
    there is no red anywhere in this product, including here. */
 .btn-danger{background:transparent;color:var(--ink);border-color:var(--ink);border-width:1.5px}
-.btn-sm{min-height:38px;font-size:var(--t-sm);padding:0 14px}
+.btn-sm{min-height:44px;font-size:var(--t-sm);padding:0 16px}  /* 44px is the floor even for a secondary action: this app has older users,
+     and a 38px control that only SOME people can hit is not a smaller button,
+     it is a broken one. Caught by the live 390px audit, not by eye. */
 .icon-btn{width:var(--tap);height:var(--tap);display:grid;place-items:center;border-radius:var(--r-pill);
   border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;flex:none}
 .head .icon-btn{background:color-mix(in srgb,var(--head-ink) 14%,transparent);border-color:color-mix(in srgb,var(--head-ink) 24%,transparent);color:var(--head-ink)}
