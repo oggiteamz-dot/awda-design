@@ -320,7 +320,7 @@ export function calendar(root, go) {
         ${WEEKDAYS.map((w) => `<span class="kicker-ar" style="text-align:center;font-size:9px">${w.slice(0, 3)}</span>`).join('')}</div>
       <div class="dotgrid" style="grid-template-columns:repeat(7,1fr);gap:4px">
         ${cells.map((d) => d === null ? '<span></span>' : `
-          <button style="aspect-ratio:1;border-radius:10px;border:1px solid ${d === t.d ? 'var(--acc)' : 'transparent'};
+          <button style="aspect-ratio:1;min-height:44px;border-radius:10px;border:1px solid ${d === t.d ? 'var(--acc)' : 'transparent'};
             background:${d < t.d ? (d % 8 === 3 ? 'color-mix(in srgb,var(--acc) 40%,var(--card2))' : 'color-mix(in srgb,var(--acc) 85%,var(--card))') : 'var(--card2)'};
             color:${d < t.d ? 'var(--acc-ink)' : 'var(--soft)'};font-family:Kufi;font-size:12px;font-weight:600;cursor:pointer" class="n">${toAr(d)}</button>`).join('')}
       </div>`)}
