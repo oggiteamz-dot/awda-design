@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B6144">
+<title>عَوْدة — نظام التصميم والاتجاه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500&amp;family=Amiri+Quran&amp;display=swap">
+<link rel="stylesheet" href="../src/core/style.css">
+<style>
+  body{background:#0E1114;color:#E6EDF2}
+  .page{max-width:940px;margin-inline:auto;padding:0 22px 100px}
+  .sysrule{height:1px;background:rgba(230,237,242,.14);margin-block:0}
+  .lede{font-size:21px;line-height:1.8;color:#C3CDD4;max-width:62ch}
+  h1.big{font-family:Kufi;font-weight:700;font-size:clamp(40px,8vw,74px);line-height:1.08;margin:0}
+  h2.sec2{font-family:Kufi;font-weight:700;font-size:clamp(26px,4.6vw,38px);margin:0 0 6px}
+  h3.sec3{font-family:Kufi;font-weight:600;font-size:21px;margin:0 0 8px}
+  .lbl{font-family:Mono;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7E8B94;display:block}
+  .blk{margin-block:64px}
+  .p{color:#C3CDD4;line-height:1.85;max-width:66ch;margin:0 0 14px}
+  .p b{color:#fff;font-weight:600}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+  .box{background:#171C20;border:1px solid rgba(230,237,242,.11);border-radius:16px;padding:18px}
+  .palrow{border-radius:16px;overflow:hidden;border:1px solid rgba(230,237,242,.11)}
+  .palhead{padding:20px 18px 26px;position:relative}
+  .palbody{background:#fff;padding:14px 18px;color:#111}
+  .palbody .ln{display:flex;justify-content:space-between;gap:10px;font-family:Mono;font-size:11px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.07)}
+  .tokens{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+  .tok{width:26px;height:26px;border-radius:7px;border:1px solid rgba(0,0,0,.18)}
+  .ok{color:#3FBF86;font-family:Mono;font-size:11px}
+  .icsheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px}
+  .icsheet div{background:#171C20;border:1px solid rgba(230,237,242,.1);border-radius:12px;padding:14px 6px;text-align:center}
+  .icsheet .ic{width:26px;height:26px;color:#8FE3C0}
+  .icsheet span{display:block;font-family:Mono;font-size:9.5px;color:#7E8B94;margin-top:8px;letter-spacing:.04em;word-break:break-all}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:start;padding:11px 8px;border-bottom:1px solid rgba(230,237,242,.11);vertical-align:top;color:#C3CDD4}
+  th{font-family:Mono;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#7E8B94;font-weight:500}
+  td b{color:#fff}
+  .yes{color:#3FBF86}.no{color:#E08A7A}
+  a{color:#57D8A2}
+  .spec{background:#171C20;border-radius:16px;padding:26px;border:1px solid rgba(230,237,242,.11)}
+  .motion{height:88px;border-radius:12px;background:#12171A;display:grid;place-items:center;overflow:hidden;position:relative;cursor:pointer}
+  .motion i{width:44px;height:44px;border-radius:12px;background:#2F8F68;display:block}
+  .backlink{position:fixed;inset-block-start:16px;inset-inline-start:16px;z-index:9;background:#1C2328;border:1px solid rgba(230,237,242,.14);
+    border-radius:999px;padding:9px 16px;font-family:Kufi;font-weight:600;font-size:13px;color:#E6EDF2;text-decoration:none}
+</style>
+</head>
+<body>
+<a class="backlink" href="../">&larr; إلى التطبيق</a>
+<div class="page">
+
+  <header style="padding-block:90px 40px">
+    <span class="lbl">عودة · AWDA — design direction, build 8</span>
+    <h1 class="big" style="margin-top:18px">آلةٌ<br>لا ضريح</h1>
+    <p class="lede" style="margin-top:26px">
+      الاتّجاه كلّه في جملة واحدة: <b style="color:#fff">هذا التطبيق آلةُ قياسٍ، لا مقام.</b>
+      الأسطرلاب وجداول الزيج وعلم الميقات صنعها فلكيّون مسلمون <i>ليؤدّوا الدين بدقّة</i> — ليجدوا القبلة ويضبطوا أوقات الصلاة.
+      فالسجلّ العلميّ ليس مستعاراً من خارج الدين، بل هو من صميمه. وهذا هو الجسر بين
+      «علميّ ومتقدّم تقنيّاً» و«موصول بالله» — ولا يسلكه أيّ تطبيق إسلاميّ آخر، لأنّهم جميعاً يذهبون إلى صورة المسجد والهلال والفانوس.
+    </p>
+  </header>
+
+  <div class="sysrule"></div>
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <section class="blk">
+    <span class="lbl">٠١ — المشكلة التي يحلّها هذا الاتّجاه</span>
+    <h2 class="sec2" style="margin-top:12px">لماذا رُفضت اللوحات الستّ</h2>
+    <p class="p">قلتَ في ١٧ أيلول: <b>«هذا التطبيق ليس عن الموت وحده. إنّه عن التعليم، عن الإيمان.»</b> وكنتَ محقّاً.
+      أربع لوحات داكنة ولوحتان فاتحتان باهتتان، كلّها تُقرأ كتطبيق حِداد — والسبب أنّ كلّاً منها كانت تضع <b>المزاج في اللوحة</b>.</p>
+    <p class="p">الإصلاح ليس لوحةً أفتح. الإصلاح أن يخرج المزاج من اللوحة ويدخل في <b>الموضع</b>:
+      اللوحة صارت هويّةً مشرقة، والسجلّان الجادّان — <b>الوثيقة</b> للوصيّة و<b>الكفن</b> للاحتضار — أرضيّتان ثابتتان
+      ترتديهما كلّ لوحة بلا تغيير. فيصير التطبيق حيّاً في الرئيسيّة وصامتاً في الاحتضار، بلا أن تحاول لوحةٌ واحدة أن تكون الاثنين معاً.</p>
+    <div class="grid3" style="margin-top:22px">
+      <div class="box"><span class="lbl">المرصد</span><p class="p" style="font-size:14px;margin-top:8px">الرئيسيّة · الصلاة · القضاء · المعرفة — كتلة لونٍ مشبعة في الأعلى، وبطاقات بيضاء تحتها.</p></div>
+      <div class="box"><span class="lbl">الوثيقة</span><p class="p" style="font-size:14px;margin-top:8px">الوصيّة — ورقٌ وحبر، زوايا ١٠px، مواد مرقّمة، ولا ذهب.</p></div>
+      <div class="box"><span class="lbl">الكفن</span><p class="p" style="font-size:14px;margin-top:8px">الاحتضار — أبيضُ قريبٌ من الناصع، فراغ واسع، بلا حركة، وعنصرٌ أخضر واحد.</p></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <section class="blk">
+    <span class="lbl">٠٢ — البنية</span>
+    <h2 class="sec2" style="margin-top:12px">الكتلة المشبعة، والبطاقة البيضاء</h2>
+    <p class="p">قياسٌ على مُوبِن عبر <b>Monzo · Buddy · Copilot Money · Rocket Money · KOHO · Affirm</b>:
+      التطبيقات المشرقة التي تبقى مقروءة تضع <b>كتلة لونٍ مشبعة في الأعلى وبطاقات بيضاء تحتها</b>،
+      ولا يجلس نصّ الجسد على اللون المشبع أبداً — بل أرقام العرض وسطرٌ أبيض واحد.
+      لهذا لا يكلّفها السطوع نقطةَ تباينٍ واحدة. وهذا بالضبط ما أخطأته اللوحات الفاتحة القديمة حين وضعت رماديّاً على أرضيّةٍ شاحبة.</p>
+    <p class="p">وتتداخل البطاقة الأولى مع حافّة الكتلة السفلى (<code style="font-family:Mono;color:#8FE3C0">margin-block-start:-40px</code>) —
+      وهذا ما يمنع الكتلة من أن تُقرأ كـ«بانر» ويجعلها تُقرأ كأرضيّة التطبيق نفسه.</p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <section class="blk">
+    <span class="lbl">٠٣ — اللوحات</span>
+    <h2 class="sec2" style="margin-top:12px">ثماني لوحات، كلّها مقيسة</h2>
+    <p class="p">الأرضيّة <b>٤٫٥:١ على كلّ زوج نصّ، وللعناوين أيضاً</b>. استثناء الخطّ الكبير في WCAG عند ٣:١ يقيس إضاءةَ مساحةٍ واسعة
+      ولا يعرف شيئاً عن النقاط والتشكيل التي تحمل المعنى في العربيّة — والجيم والحاء يفترقان بنقطةٍ بحجم ٨٪ من السطر.
+      لا لوحة هنا تأخذ ذلك الاستثناء. ستٌّ من السبع عشرة الأصليّة سقطت تحت هذا الحدّ وشُحنت رغم ذلك؛ الآن يوجد فحصٌ يُسقط البناء.</p>
+    <div class="grid2" id="pals" style="margin-top:24px"></div>
+    <div class="box" style="margin-top:20px">
+      <span class="lbl">نتيجة الفحص</span>
+      <pre id="contrast" style="font-family:Mono;font-size:11.5px;color:#C3CDD4;line-height:1.9;margin:12px 0 0;white-space:pre-wrap"></pre>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <section class="blk">
+    <span class="lbl">٠٤ — الخطوط</span>
+    <h2 class="sec2" style="margin-top:12px">ثلاثة خطوط، وقاعدة لا تُكسر</h2>
+    <p class="p"><b>لا يُكتب القرآن بخطّ الواجهة أبداً، ولا تُكتب الواجهة بخطّ القرآن أبداً.</b>
+      هذا الفصل الطباعيّ <i>هو</i> التمييز البصريّ الذي يجب أن تناله الآية: يجب ألّا يمكن أبداً أن تُخلط آيةٌ بكلامنا نحن.</p>
+    <div class="spec" style="margin-top:20px">
+      <div style="padding-block:20px;border-bottom:1px solid rgba(230,237,242,.11)">
+        <span class="lbl">Noto Kufi Arabic — العرض</span>
+        <p style="font-family:Kufi;font-weight:700;font-size:46px;line-height:1.2;margin:14px 0 6px;color:#fff">المعصومون الأربعة عشر</p>
+        <p class="p" style="font-size:14px">كوفيّ هندسيّ ومعماريّ. الكوفيّ خطّ عرضٍ بحكم وظيفته، ولا يُستعمل للجسد أبداً.</p>
+      </div>
+      <div style="padding-block:20px;border-bottom:1px solid rgba(230,237,242,.11)">
+        <span class="lbl">IBM Plex Sans Arabic — الواجهة والجسد</span>
+        <p style="font-size:19px;line-height:1.75;margin:14px 0 6px;color:#fff">الوصيّة مستحبّة في نفسها، وتصير واجبة إذا كان على الإنسان حقٌّ لا يُعرف إلّا بإخباره.</p>
+        <p class="p" style="font-size:14px">وجهٌ نسخيٌّ للواجهات — والسبب في اختياره دون «القاهرة» أو «تجوال» أنّ Plex رُسم أصلاً وجهاً تقنيّاً لشركة هندسيّة، فيحمل سجلّ الآلة إلى نصّ الجسد نفسه.</p>
+      </div>
+      <div style="padding-block:20px;border-bottom:1px solid rgba(230,237,242,.11)">
+        <span class="lbl">IBM Plex Mono — بطاقة الآلة</span>
+        <p style="font-family:Mono;font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin:14px 0 6px;color:#fff">RECOVERY · 4.5:1 FLOOR · TABULAR</p>
+        <p class="p" style="font-size:14px">صغيرة، بفواصل واسعة، بحروف كبيرة — حركة WHOOP و Oura، وهي ما يجعل الشاشة تُقرأ مقيسةً لا مزخرفة.
+          <b>وللعربيّة لا يوجد حرفٌ كبير</b>، فتؤدّي النسخة العربيّة الدورَ نفسه بالكوفيّ الصغير بلا تباعد — لأنّ التباعد يفكّ اتّصال الحرف العربيّ.</p>
+      </div>
+      <div style="padding-block:20px">
+        <span class="lbl">Amiri Quran — للقرآن وحده</span>
+        <p class="verse" style="margin-top:14px;background:#12171A;color:#EDF3F7;border-color:#8A6C2E">كُتِبَ عَلَيْكُمْ إِذَا حَضَرَ أَحَدَكُمُ ٱلْمَوْتُ إِن تَرَكَ خَيْرًا ٱلْوَصِيَّةُ لِلْوَٰلِدَيْنِ وَٱلْأَقْرَبِينَ بِٱلْمَعْرُوفِ
+          <span class="verse-ref" style="color:#7E8B94">البقرة · ١٨٠</span></p>
+      </div>
+    </div>
+    <h3 class="sec3" style="margin-top:30px">قواعد النصّ القرآنيّ — وهي ليست أذواقاً</h3>
+    <table>
+      <tr><th>القاعدة</th><th>لماذا</th></tr>
+      <tr><td><b>لا تكون الآية عنوان زرّ أبداً</b></td><td>عنوان الزرّ أثاثُ واجهة، والضغطُ «عبر» الآية للوصول إلى مكانٍ آخر هو بعينه خطأ «الزينة لا العظة». الفئة <code>.verse</code> ترفض أن تكون زرّاً: <code>pointer-events:none</code>.</td></tr>
+      <tr><td><b>لا يُشكَّل نصٌّ قرآنيّ في صورةٍ أو شكل</b></td><td>التحريم الوحيد الصريح هنا، وله قرار من مجمع الفقه. ويستبعد أيضاً الحركة المغرية: أن تُكتب آيةٌ <i>على شكل</i> الوردة الاثني عشريّة.</td></tr>
+      <tr><td><b>البسملة آيةٌ مرقّمة، لا عنوان زخرفيّ</b></td><td>الموقف الإماميّ أنّها آية من كلّ سورة عدا براءة. أكثر التطبيقات ذات الافتراض السنّيّ تجعلها ترويسةً مزخرفة. تصحيحٌ لا يراه غريب، ويراه الشيعيّ فوراً.</td></tr>
+      <tr><td><b>مفتاح لإيقاف عرض النصّ القرآنيّ</b></td><td>الحكم يتعلّق بالبكسل المعروض لا بالملفّ المخزَّن. مفيدٌ فعلاً للحائض ولمن ليس على وضوء، ولا يقدّمه أيّ تطبيق في هذه الفئة.</td></tr>
+      <tr><td><b>﴿ﷺ﴾ ممنوعة — تُكتب «صلّى الله عليه وآله» كاملة</b></td><td>الرمز U+FDFA يرمّز «وسلّم» بلا «وآله»، فيعرض الصيغة السنّيّة صامتاً في تطبيقٍ شيعيّ.</td></tr>
+    </table>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <section class="blk">
+    <span class="lbl">٠٥ — الأيقونات والزخرفة</span>
+    <h2 class="sec2" style="margin-top:12px">مبنيّةٌ هندسيّاً، لا منقولة</h2>
+    <p class="p">كلّ علامة تُولَّد من إنشاءٍ گِرِهيٍّ حقيقيّ وقت التشغيل — ولهذا تبقى حادّة عند أيّ حجم، وتغييرُ رقمٍ واحد يغيّر العائلة كلّها.
+      والأحكام أدناه من بحث <code style="font-family:Mono;color:#8FE3C0">SHIA-ICONOGRAPHY.md</code>، الذي فحص كلّ رمزٍ مرشّح بمصادر شيعيّة لا بما «يبدو إسلاميّاً».</p>
+    <div class="grid2" style="margin-top:22px">
+      <div class="box"><span class="lbl">تُستعمل</span>
+        <table style="margin-top:10px">
+          <tr><td><b>الوردة الاثنا عشريّة</b></td><td>أصيلة في گِره العتبات — حيث لا وجود للرباعيّ عشر — وتُقرأ كالأئمّة الاثني عشر. وهي علامة الهويّة.</td></tr>
+          <tr><td><b>التربة / المهر</b></td><td>أكثر شيءٍ شيعيٍّ في اليوميّ، وعلامة شاشة القضاء.</td></tr>
+          <tr><td><b>الكوفيّ المربّع (بنّائي)</b></td><td>مبنيٌّ على شبكة، وقد كُتب بالآجرّ على الجدران. زخرفة فقط، بلا كلماتٍ تُقرأ.</td></tr>
+          <tr><td><b>خليّة المقرنص</b></td><td>شكلُ حاوٍ مشفَّرٌ بالحرم، بلا شحنة مذهبيّة.</td></tr>
+          <tr><td><b>آيينه‌كاري</b></td><td>أقوى إشارة إلى «داخل الحرم» لا «إسلاميّ عامّ».</td></tr>
+          <tr><td><b>قوس الأسطرلاب</b></td><td>ليس رمزاً دينيّاً أصلاً — بل الآلة التي بُنيت لضبط القبلة والمواقيت. وهي الجسر كلّه.</td></tr>
+          <tr><td><b>الجريدة الخضراء</b></td><td>العنصر الأخضر الوحيد المسموح على أرضيّة الكفن.</td></tr>
+        </table>
+      </div>
+      <div class="box"><span class="lbl">مستبعَدة عمداً</span>
+        <table style="margin-top:10px">
+          <tr><td><b>الهلال والنجمة · صورة المسجد · الفانوس · المسبحة</b></td><td>الافتراض التلقائيّ للفئة كلّها. استعمالها إعلانٌ بأنّ التطبيق كسائر التطبيقات.</td></tr>
+          <tr><td><b>﴿۞﴾ ربع الحزب علامةً تجاريّة</b></td><td>عامٌّ بين المسلمين، بلا أيّ خصوصيّة شيعيّة، وهو أصلاً افتراض الفئة.</td></tr>
+          <tr><td><b>العَلَم · ذو الفقار · الأسد</b></td><td>سلاحٌ وشعارٌ صار مشفَّراً سياسيّاً وميليشيويّاً.</td></tr>
+          <tr><td><b>الپنجة / الخمسة</b></td><td>وظيفة تميمة، وأصلٌ وثنيّ، وتحريمٌ سلفيّ صريح، وكليشيه «بوهو».</td></tr>
+          <tr><td><b>اللالة (التوليب)</b></td><td>تُقرأ شعارَ علم الجمهوريّة الإسلاميّة عند العربيّ.</td></tr>
+          <tr><td><b>صور الأئمّة</b></td><td>يحرّمها بشير النجفيّ صراحةً، ويتحفّظ عليها السيستانيّ.</td></tr>
+          <tr><td><b>الأحمر — في أيّ موضع</b></td><td>الاستشهاد والثأر، وهو في التعزية لونُ <i>الشرّير</i>. ومن يموت بمرضٍ ليس شهيداً، وتأطيره هكذا خطأُ صنفٍ تشعر به العائلة.</td></tr>
+          <tr><td><b>الأسود لوحةً عامّة</b></td><td>مكروهٌ في غير الحداد، واستثناء الحداد ضيّق. خرومٌ أسود يقول «حِداد» في كلّ شاشة، بما فيها شاشة تسجيل عصرٍ فائت.</td></tr>
+        </table>
+      </div>
+    </div>
+    <h3 class="sec3" style="margin-top:30px">الطقم</h3>
+    <div class="icsheet" id="ics" style="margin-top:14px"></div>
+    <div class="grid3" style="margin-top:18px" id="orns"></div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <section class="blk">
+    <span class="lbl">٠٦ — الحركة</span>
+    <h2 class="sec2" style="margin-top:12px">تسع حركات، لكلٍّ منها عملٌ واحد</h2>
+    <p class="p">سُمّيت بالعربيّة لأنّ الحركة المسمّاة يمكن الاختلاف عليها: «الطلوع بطيء» نقاشٌ، و«الأنيميشن بطيء» ليس كذلك.
+      واضغط على أيّ مربّع لتراها.</p>
+    <div class="grid3" style="margin-top:20px" id="motions"></div>
+    <div class="box" style="margin-top:20px;border-color:rgba(87,216,162,.3)">
+      <span class="lbl" style="color:#57D8A2">القاعدة التي تُلغي البقيّة</span>
+      <p class="p" style="margin-top:10px"><b>السكون.</b> على شاشة الاحتضار تُعطَّل كلّ حركةٍ في هذا الملفّ عدا الشفافيّة.
+        يفتحها إنسانٌ في أسوأ لحظات حياته، على هاتف، بيدين ترتجفان. الحركة هناك ليست بهجة، بل حاجزٌ بينه وبين تعليمةٍ يحتاجها الآن.
+        كلّ نمطٍ في النظام يستطيع أن يعيد تصميم ذلك التبويب. ولا واحد منها يستطيع أن يحرّكه.</p>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <section class="blk">
+    <span class="lbl">٠٧ — ما لا يفعله التطبيق</span>
+    <h2 class="sec2" style="margin-top:12px">لا تلعيب على عبادة</h2>
+    <p class="p">لا تتابع، لا نقاط، لا شارات، لا لوحة صدارة، ولا شيء يتحوّل إلى الأحمر، ولا شيء «ينكسر».
+      والسبب ليس ذوقاً: <b>التتابع يعاقب المرض والحيض والسفر والحزن</b> — وهي بعينها الأعذار التي رفعها الشرع أصلاً —
+      ويُدخل الرياء، أي أداء العبادة لأجل رقم، في فعلٍ تتوقّف صحّته على النيّة.
+      وتطبيقٌ يريك سلسلةً مكسورة لصلاةٍ كنتَ معذوراً عنها لا يحفّزك، بل يكذب عليك في دينك.</p>
+    <table style="margin-top:18px">
+      <tr><th>بدل</th><th>نستعمل</th><th>المصدر في المسح</th></tr>
+      <tr><td class="no">تتابع</td><td class="yes">شبكة نقاط للأسابيع الماضية، بلا مجموع وبلا تقييم</td><td>stoic. — «نقطة لكلّ يوم»</td></tr>
+      <tr><td class="no">نتيجة تصعد</td><td class="yes">دَينٌ ينزل نحو الصفر</td><td>YNAB · Buddy · Rocket Money</td></tr>
+      <tr><td class="no">نجح / رسب</td><td class="yes">«ضمن المدى»</td><td>Eight Sleep — «in range (±30m)»</td></tr>
+      <tr><td class="no">«لقد كسرت السلسلة!»</td><td class="yes">خبر: «بقيت صلاتان على هدف اليوم»</td><td>—</td></tr>
+      <tr><td class="no">حلقة للدَّين الكامل</td><td class="yes">كلّ حلقة محدودة بيومٍ أو أسبوع</td><td>الحلقة توحي بهدفٍ يُغلق؛ وحلقةُ عمرٍ عند ٤٪ اتّهام</td></tr>
+    </table>
+    <p class="p" style="margin-top:16px">ويُسمح باللعب على <b>المعرفة</b> وحدها — تقدّمٌ في باب، و«لم تُقرأ بعد»، و«جديد هذا الأسبوع».
+      الدرس ليس عبادة، والعبادة ليست درساً.</p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <section class="blk">
+    <span class="lbl">٠٨ — التخطيط</span>
+    <h2 class="sec2" style="margin-top:12px">تخطيطٌ لكلّ موضع، لا تخطيطٌ واحد للتطبيق</h2>
+    <p class="p">لم تكن قد اخترت واحداً من الاثني عشر، وهذا كان يعطّل كلّ ما بعده. التوصية هنا أن <b>لا تختار واحداً</b>:
+      الأطلس نفسه يقول إنّ لكلّ نمطٍ «أفضل شاشة»، وفرضُ بنيةٍ واحدة على خمسة تبويبات يهدر ذلك بالضبط —
+      وهو نفسه سببُ أنّ السبع عشرة لوحة القديمة بدت تطبيقاً واحداً.</p>
+    <table style="margin-top:18px">
+      <tr><th>الموضع</th><th>التخطيط</th><th>لماذا</th></tr>
+      <tr><td><b>الرئيسيّة</b></td><td>الشبكة · Bento</td><td>عمودان بعرض ١٧٣px وبطاقة ٢×٢ تتصدّر. مصمَّمة عند عمودين مباشرةً — والفشل الموثّق للبِنتو على الهاتف هو شحن شبكةِ سطح مكتبٍ منهارة.</td></tr>
+      <tr><td><b>الصلاة</b></td><td>المسار · Path</td><td>اليوم كخطٍّ رأسيّ وعليه علامة «الآن». أفضل مطابقةٍ دلاليّة في الأطلس كلّه: اليوم <i>هو</i> تسلسل.</td></tr>
+      <tr><td><b>القضاء</b></td><td>السجل · Register</td><td>أسطر بارتفاع ٥٢px، خطوط شعريّة من حافّة إلى حافّة، أرقام جدوليّة. الدَّين سجلّ، والسجلّ أسطر.</td></tr>
+      <tr><td><b>المعرفة</b></td><td>المجلة · Editorial</td><td>ثمانية أبواب كـ«أقسامٍ» والصفحات كـ«مقالات». أفضل بيتٍ لمكتبة.</td></tr>
+      <tr><td><b>الوصيّة</b></td><td>المخطوط · Manuscript</td><td>متنٌ مضبوط وهامش ومواد مرقّمة. وثيقةٌ قانونيّة يجب أن تبدو كذلك.</td></tr>
+      <tr><td><b>الاحتضار</b></td><td>الخط · Calligraphy</td><td>بلا بطاقات وبلا خروم. الفراغ هو التصميم هنا.</td></tr>
+    </table>
+    <p class="p" style="margin-top:16px">ومع ذلك يبقى المبدّل العامّ (١٢ تخطيطاً × ٤ أسطح × ٨ لوحات = <b>٣٨٤ مظهراً</b> من ٢٤ سطر بيانات)
+      لتُقارَن البدائل على هاتفٍ حقيقيّ بدل أن تُناقَش في المجرّد.</p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <section class="blk">
+    <span class="lbl">٠٩ — المسح</span>
+    <h2 class="sec2" style="margin-top:12px">ما أُخذ من أين</h2>
+    <p class="p">٦٠ شاشة و٧ تدفّقات كاملة عبر ٤٥ تطبيقاً على مُوبِن، من الأعمال والصحّة ونمط الحياة —
+      <b>ولا تطبيق إسلاميّ واحد</b>، عن قصد. البحث السابق فحص تلك الفئة ووجد أنّها تتشارك العيوب نفسها.</p>
+    <table style="margin-top:18px">
+      <tr><th>المأخوذ</th><th>من</th><th>أين استُعمل</th></tr>
+      <tr><td>كتلة لونٍ مشبعة، وبطاقة بيضاء تتداخل مع حافّتها</td><td><a href="https://mobbin.com/screens/684e06c5-6ce4-419f-986f-ae4c2d5ae8ed">Buddy</a> · <a href="https://mobbin.com/screens/935c477f-d2a5-43b4-b68b-1640269c698e">Copilot Money</a> · <a href="https://mobbin.com/screens/6bf5c16b-9aef-48ee-b436-c262ac34f360">Rocket Money</a> · <a href="https://mobbin.com/screens/0cb7826a-4614-4655-bf19-d5037235f488">Monzo</a></td><td>كلّ ترويسة في التطبيق</td></tr>
+      <tr><td>دَينٌ ينزل نحو الصفر، لا نتيجة تصعد</td><td><a href="https://mobbin.com/screens/1808bef8-d3ff-416d-ae8e-7f8999a62311">YNAB</a> · <a href="https://mobbin.com/screens/f6e510b5-2c2b-4188-999e-08aadaadae30">KOHO</a></td><td>شاشة القضاء</td></tr>
+      <tr><td>بطاقة الآلة: حروف صغيرة متباعدة، وأرقام جدوليّة ضخمة</td><td><a href="https://mobbin.com/screens/33b30723-adc2-4efa-82d5-6c320624aff3">WHOOP</a> · <a href="https://mobbin.com/screens/b7ae7e96-85bc-440b-8f7f-e7450f7523fd">Oura</a> · <a href="https://mobbin.com/screens/8e7fedb4-8b6a-4723-b84f-ab33aa2d16eb">Ultrahuman</a></td><td>السجلّ العلميّ كلّه</td></tr>
+      <tr><td>«ضمن المدى» بدل نجح/رسب</td><td><a href="https://mobbin.com/screens/1950371b-dbdc-4144-a424-049b44c06602">Eight Sleep</a></td><td>وتيرة القضاء</td></tr>
+      <tr><td>نقطة لكلّ يوم، بلا مجموع</td><td><a href="https://mobbin.com/screens/3fe60292-97c3-4597-86fd-7f6a5b1ab2ab">stoic.</a> · <a href="https://mobbin.com/screens/33f7a108-2ad4-4e47-b775-718871d5f759">Ultrahuman</a></td><td>بديل التتابع</td></tr>
+      <tr><td>لحظة «الحساب» — أسطر معنونة تمتلئ تباعاً</td><td><a href="https://mobbin.com/flows/0f88ecd3-ceb0-43d1-af33-6feafe56928b">Noom</a></td><td>الخطوة ٩ من المعايرة — <b>لكن بحسابٍ حقيقيّ</b></td></tr>
+      <tr><td>منزلق ١–١٠ برقمٍ ضخم</td><td><a href="https://mobbin.com/flows/e91bc9a4-db92-449a-8de2-2d5e81381f6b">Life Reset</a></td><td>وتيرة القضاء، وأيّام الحيض</td></tr>
+      <tr><td>رمز من ستّ خانات، LTR داخل صفحة RTL</td><td><a href="https://mobbin.com/flows/3d263ecb-63d2-494c-9840-e50f625adfc5">Lyft</a> · <a href="https://mobbin.com/flows/b10b360c-4b0f-4ebb-b591-ddba0d03cf84">Lugg</a></td><td>الدخول</td></tr>
+      <tr><td>تعليمةٌ واحدة في كلّ شاشة</td><td><a href="https://mobbin.com/screens/2719ff6a-1570-4f44-8fc3-050cc5e577a5">Apple Health</a> · <a href="https://mobbin.com/screens/0ec277ec-2b20-4007-b76f-901881a7c789">Crouton</a></td><td>الاحتضار</td></tr>
+      <tr><td>بلاطات أبوابٍ بأيقونة وعنوان</td><td><a href="https://mobbin.com/screens/e5f2dc9e-71fe-4a97-b915-313a7db21f58">Particle News</a> · <a href="https://mobbin.com/screens/901a91e5-9447-4e5f-af5b-d71e5fed0cad">Coursera</a></td><td>المعرفة</td></tr>
+      <tr><td>ورقة أنماطٍ بأسماء وعلامة اختيار</td><td><a href="https://mobbin.com/screens/1d64df0e-b4a8-410d-9fad-d2587befcf7f">Polarsteps</a> · <a href="https://mobbin.com/screens/b2f64c32-c3f9-44c4-8d67-753bc3a92f9a">PlayStation</a></td><td>ورقة الأنماط</td></tr>
+      <tr><td>زرّ تسجيلٍ دائريّ كبير، وعدّاد</td><td><a href="https://mobbin.com/screens/f8eb5199-5b0e-4c30-a800-caaa30e106ab">WhatsApp</a> · <a href="https://mobbin.com/screens/870439ce-b80c-4e24-80a0-9f34a588e51e">Messages</a></td><td>تسجيل رسالة الوداع</td></tr>
+    </table>
+    <div class="box" style="margin-top:20px">
+      <span class="lbl">ما رُفض من المسح، عمداً</span>
+      <p class="p" style="margin-top:10px;font-size:15px">
+        <b>جدار الدفع.</b> نصف التدفّقات المقيسة تنتهي بشاشة اشتراك، وبعضها بعدّادٍ تنازليّ («خطّتك محجوزة ١٤:٥٩»).
+        هذا التطبيق <b>لا يملك مسار دفعٍ أصلاً</b>، ويجب ألّا توحي المعايرة بأنّ واحداً قادم.<br><br>
+        <b>الرموز التعبيريّة.</b> يستعملها Ahead و Finch و Numo بكثافة. لا واحد منها هنا — الرمز التعبيريّ رسمُ شخصٍ آخر، يُعرض مختلفاً على كلّ هاتف، وهو أسرع طريقة لجعل تطبيقٍ دينيّ يبدو غير جادّ. ويوجد فحصٌ يُسقط البناء عليها.<br><br>
+        <b>«بناءً على ملايين نقاط البيانات».</b> لحظة Noom مسرحٌ لا يُحسب فيه شيء. النسخة هنا تحسب فعلاً، ويُظهر كلّ سطرٍ مُدخَله — وهذا هو الفرق بين أن تبدو علميّاً وأن تكون علميّاً.
+      </p>
+    </div>
+  </section>
+
+  <footer style="padding-block:60px 0;border-top:1px solid rgba(230,237,242,.14)">
+    <span class="lbl">عودة · AWDA — design build 8 · ١٨ أيلول ٢٠٢٦</span>
+    <p class="p" style="margin-top:14px">مبنيّ على <code style="font-family:Mono;color:#8FE3C0">SHIA-ICONOGRAPHY.md</code> (٦٢ ك.ب) و<code style="font-family:Mono;color:#8FE3C0">LAYOUT-ATLAS.md</code> (٦٥ ك.ب) من مستودع المشروع، ومسح مُوبِن في ١٨ أيلول.
+      كلّ لوحةٍ هنا تمرّ <code style="font-family:Mono;color:#8FE3C0">scripts/contrast.mjs</code>؛ ١٦٤ زوجاً، صفر إخفاق.</p>
+    <p style="margin-top:20px"><a href="../">&larr; إلى التطبيق</a></p>
+  </footer>
+</div>
+
+<script type="module">
+import { PALETTES, GROUNDS } from '../src/core/palettes.js';
+import { ICONS, icon } from '../src/core/icons.js';
+import { rosette12, turbah, jarida, astroArc, kuficField, muqarnasPath } from '../src/core/ornament.js';
+import { rise, drawArc, countTo, extend, fold, glint, rotate, pulse } from '../src/core/motion.js';
+
+/* contrast, recomputed live on the page so the numbers can never drift from the tokens */
+const hx=h=>{h=h.trim().replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16))};
+const li=c=>{c/=255;return c<=.04045?c/12.92:Math.pow((c+.055)/1.055,2.4)};
+const lum=r=>.2126*li(r[0])+.7152*li(r[1])+.0722*li(r[2]);
+const rat=(a,b)=>{const[x,y]=[lum(hx(a)),lum(hx(b))].sort((p,q)=>q-p);return (x+.05)/(y+.05)};
+const stops=v=>(v.match(/#[0-9a-fA-F]{3,6}/g)||[v]).filter(s=>/^#[0-9a-fA-F]{3,6}$/.test(s));
+const PAIRS=[['head-ink','head'],['head-soft','head'],['ink','bg'],['ink','card'],['soft','bg'],['soft','card'],['ink','card2'],['soft','card2'],['acc','card'],['acc','bg'],['acc-ink','acc']];
+const worst=v=>{let w=Infinity;for(const[t,g]of PAIRS)for(const gs of stops(v[g]))for(const ts of stops(v[t]))w=Math.min(w,rat(ts,gs));return w};
+
+const all=[...PALETTES.map(p=>({...p,kind:'لوحة'})),...Object.entries(GROUNDS).map(([k,g])=>({key:k,ar:g.ar,en:g.en,v:g.v,note:k==='doc'?'أرضيّة ثابتة للوصيّة — لا تتبع اللوحة المختارة.':'أرضيّة ثابتة للاحتضار — أبيض الكفن، لا أسود.',source:'',kind:'أرضيّة'}))];
+document.getElementById('pals').innerHTML = all.map(p=>`
+  <div class="palrow">
+    <div class="palhead" style="background:${p.v.head};color:${p.v['head-ink']}">
+      <span style="font-family:Mono;font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.85">${p.kind} · ${p.en}</span>
+      <div style="font-family:Kufi;font-weight:700;font-size:27px;margin-top:6px">${p.ar}</div>
+      <div style="font-family:Kufi;font-size:12px;color:${p.v['head-soft']};margin-top:6px">نصٌّ ثانويّ على الكتلة</div>
+    </div>
+    <div class="palbody" style="background:${p.v.bg}">
+      <div style="background:${p.v.card};border:1px solid ${p.v.line};border-radius:12px;padding:12px;margin-bottom:10px">
+        <div style="color:${p.v.ink};font-size:14px;font-family:Kufi;font-weight:600">نصٌّ أساسيّ على بطاقة</div>
+        <div style="color:${p.v.soft};font-size:12.5px;margin-top:4px">نصٌّ ثانويّ على بطاقة</div>
+        <div style="color:${p.v.acc};font-size:12.5px;font-family:Kufi;font-weight:600;margin-top:6px">لونٌ مميِّز على بطاقة</div>
+      </div>
+      <div class="tokens">${['head-flat','bg','card','card2','ink','soft','acc','rule'].map(k=>`<i class="tok" title="${k}" style="background:${p.v[k]}"></i>`).join('')}</div>
+      <div class="ln" style="margin-top:10px;border:0;color:#444"><span>أسوأ زوج نصّ</span><span class="ok" style="color:#127A4E">${worst(p.v).toFixed(2)}:1 ✓</span></div>
+      ${p.source?`<div dir="ltr" style="font-size:11.5px;color:#555;line-height:1.7;padding-top:8px;border-top:1px solid rgba(0,0,0,.07);text-align:left;font-family:PlexLat,system-ui,sans-serif">${p.source}</div>`:''}
+      <div style="font-family:Kufi;font-size:12px;color:#666;margin-top:6px">${p.note}</div>
+    </div>
+  </div>`).join('');
+
+document.getElementById('contrast').textContent =
+  all.map(p=>`${(p.ar).padEnd(16,' ')} ${worst(p.v).toFixed(2)}:1`).join('\n') +
+  `\n\n١٦٤ زوجاً مقيساً · ١٠ لوحات · صفر إخفاق · الأرضيّة ٤٫٥:١ بلا استثناء للخطّ الكبير`;
+
+document.getElementById('ics').innerHTML = Object.keys(ICONS).map(k=>`<div>${icon(k)}<span>${k}</span></div>`).join('');
+
+document.getElementById('orns').innerHTML = [
+  ['الوردة الاثنا عشريّة', rosette12({size:150,weight:1.2})],
+  ['التربة', turbah({size:110,weight:1.6})],
+  ['الجريدة', jarida({size:110,weight:1.6})],
+  ['قوس الأسطرلاب', astroArc({size:150,value:.68,weight:2,ticks:30})],
+  ['المقرنص', `<svg viewBox="0 0 150 90" width="150" height="90"><path d="${muqarnasPath(150,90,{step:4,shoulder:.5,inset:.16})}" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>`],
+  ['الكوفيّ المربّع', `<div style="width:150px;height:90px;position:relative;color:#8FE3C0">${kuficField({id:'k9',unit:30,weight:2,opacity:.9})}</div>`],
+].map(([t,svg])=>`<div class="box" style="text-align:center;color:#8FE3C0"><div style="display:grid;place-items:center;min-height:150px">${svg}</div>
+  <span style="font-family:Kufi;font-size:13px;color:#C3CDD4;display:block;margin-top:6px">${t}</span></div>`).join('');
+
+const MOTIONS = [
+  ['الطلوع','وصول شاشة — ١٢px صعوداً مع الظهور',(i)=>rise(i,{dy:26,ms:420})],
+  ['القوس','قراءةٌ تُرسَم بدل أن تظهر',null],
+  ['العدّ','رقمٌ ينتقل بأرقام جدوليّة',null],
+  ['المدّ','خطُّ العنوان يمتدّ من اليمين — اتّجاه الكتابة',(i)=>extend(i,{ms:700})],
+  ['الطيّ','ورقةٌ تصعد من الأسفل',(i)=>fold(i,{ms:520})],
+  ['الوميض','بريقٌ واحد على سطحٍ مُفصَّص',(i)=>glint(i,{ms:900})],
+  ['الدوران','الوردة تدور دورةً كلّ دقيقتين — بالكاد تُدرَك',(i)=>rotate(i,{period:4000})],
+  ['النبض','حركة الانتباه الوحيدة المسموحة — على علامة «الآن» فقط',(i)=>pulse(i)],
+  ['السكون','كلّ ما سبق، مُلغى — على الاحتضار',null],
+];
+document.getElementById('motions').innerHTML = MOTIONS.map(([t,d],k)=>`
+  <div class="box"><span class="lbl">${String(k+1).padStart(2,'0')}</span>
+    <h3 class="sec3" style="margin-top:8px">${t}</h3>
+    <p class="p" style="font-size:13px;margin-bottom:12px">${d}</p>
+    <div class="motion" data-m="${k}"><i></i></div></div>`).join('');
+document.querySelectorAll('[data-m]').forEach(el=>{
+  const k=+el.dataset.m, box=el.querySelector('i');
+  const play=()=>{
+    if(k===1){el.innerHTML=`<div style="color:#57D8A2">${astroArc({size:74,value:.75,weight:2.4,ticks:20})}</div>`;
+      setTimeout(()=>el.querySelectorAll('.arc-draw').forEach(p=>drawArc(p,{ms:1100,delay:0})),20);return;}
+    if(k===2){el.innerHTML=`<span style="font-family:Kufi;font-weight:700;font-size:34px;color:#57D8A2;font-variant-numeric:tabular-nums" id="c${k}">٠</span>`;
+      import('../src/core/num.js').then(n=>countTo(el.querySelector('#c'+k),11270,{ms:1200,fmt:v=>n.num(v)}));return;}
+    if(k===6){el.innerHTML=`<div style="color:#57D8A2">${rosette12({size:70,weight:1.3})}</div>`;rotate(el.querySelector('svg'),{period:4000});return;}
+    if(k===8){el.innerHTML=`<span style="font-family:Kufi;font-size:14px;color:#7E8B94">لا حركة</span>`;return;}
+    el.innerHTML='<i></i>'; MOTIONS[k][2]?.(el.querySelector('i'));
+  };
+  el.addEventListener('click',play);
+  if(k===1||k===2||k===6||k===8) play();
+});
+document.querySelectorAll('.blk').forEach((b,i)=>{
+  new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){rise(b,{dy:18,ms:420});o.disconnect();}},{threshold:.05}).observe(b);
+});
+</script>
+</body>
+</html>
