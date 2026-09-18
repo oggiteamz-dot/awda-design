@@ -12,15 +12,20 @@ import * as M from './screens/main.js';
 import * as W from './screens/will.js';
 import * as I from './screens/ihtidar.js';
 import * as A from './screens/account.js';
+import * as AR from './screens/areas.js';
 import { stylesSheet } from './screens/account.js';
 
 const app = document.getElementById('app');
 const view = document.getElementById('view');
 
+/* FOUR tabs, not five. A tab is a place you RETURN to; a card is a place you GO
+   to, and home is now a launcher full of cards. الصلاة earns a tab because it is
+   opened five times a day; الأقسام earns one because it is what stops home from
+   growing forever as areas are added. القضاء is important and is NOT a tab — for
+   a large share of users it does not exist at all. docs/HOME-AND-NAVIGATION.md §5. */
 const TABS = [
   ['#/home', 'الرئيسيّة', 'home'], ['#/prayers', 'الصلاة', 'prayer'],
-  ['#/knowledge', 'المعرفة', 'knowledge'], ['#/will', 'الوصيّة', 'will'],
-  ['#/ihtidar', 'الاحتضار', 'ihtidar'],
+  ['#/index', 'الأقسام', 'grid'], ['#/account', 'حسابي', 'account'],
 ];
 
 const ROUTES = {
@@ -30,6 +35,7 @@ const ROUTES = {
   '#/will': W.will, '#/will/section': W.section, '#/will/recipients': W.recipients,
   '#/messages': W.messages, '#/messages/record': W.record,
   '#/ihtidar': I.ihtidar,
+  '#/index': AR.index, '#/history': AR.history, '#/stories': AR.stories, '#/daily': AR.daily,
   '#/account': A.account, '#/studio': A.studio, '#/admin': A.admin, '#/denied': A.denied,
 };
 
