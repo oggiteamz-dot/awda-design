@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B6144">
+<meta name="description" content="عودة — نظام تصميم وواجهة كاملة: حساب الفوائت، الوصيّة، والاحتضار.">
+<title>عَوْدة — التصميم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500&amp;family=Amiri+Quran&amp;display=swap">
+<link rel="stylesheet" href="src/core/style.css">
+<style>
+  /* Desktop puts the app in a phone frame, because this is a design being
+     reviewed and it must be reviewed at the width it will be used at — 390px.
+     A design that is only ever seen at 1400px is a design that has not been
+     checked. */
+  @media (min-width:900px){
+    body{background:#0E1114;display:grid;place-items:center;min-height:100dvh;padding:28px}
+    #frame{width:390px;height:844px;border-radius:44px;overflow:hidden;position:relative;transform:translateZ(0);
+      box-shadow:0 0 0 11px #1B2025,0 0 0 13px #2A3138,0 34px 90px rgba(0,0,0,.6)}
+    #frame>#view-scroll{height:100%;overflow-y:auto;overflow-x:hidden;background:var(--bg)}
+    #tabs{position:absolute!important}
+    .deskhint{position:fixed;inset-block-start:20px;inset-inline-start:24px;color:#8A959C;
+      font:12px/1.7 'IBM Plex Mono',monospace;letter-spacing:.06em;max-width:230px}
+    .deskhint b{color:#E6EDF2;font-weight:500}
+    .deskhint a{color:#57D8A2}
+  }
+  @media (max-width:899px){ #frame{min-height:100dvh} .deskhint{display:none} }
+</style>
+</head>
+<body>
+<div class="deskhint">
+  <b>عَوْدة · AWDA</b><br>design build 8<br><br>
+  <b>]</b> next palette<br><b>\</b> next layout<br><br>
+  <a href="system/">design system &amp; direction &rarr;</a>
+</div>
+
+<div id="frame">
+  <div id="view-scroll">
+    <main id="app"><div id="view"></div></main>
+  </div>
+  <nav id="tabs" class="tabs" aria-label="التنقّل"></nav>
+</div>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>

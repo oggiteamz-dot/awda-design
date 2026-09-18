@@ -1,0 +1,11 @@
+{
+  "name": "awda-design",
+  "version": "8.0.0",
+  "description": "Awda — design direction, palette system and interactive prototype for the Arabic Islamic app.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "check": "node scripts/contrast.mjs",
+    "serve": "python3 -m http.server 8000"
+  }
+}
