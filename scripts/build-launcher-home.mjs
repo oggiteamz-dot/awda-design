@@ -1,13 +1,16 @@
 /**
  * build-launcher-home.mjs — builds the LAUNCHER home used by the review gallery.
  *
- * Home is a launcher, not a dashboard: a conditional continue card carrying STATE,
- * a prayer status strip, then the areas as cards, then the index. See
- * docs/HOME-AND-NAVIGATION.md for the rules this file implements.
+ * Home is a launcher, not a dashboard. Order, decided by Hadi on 18 Sep:
+ *   1. الوصيّة  — leads. The will is the product's first job.
+ *   2. القضاء   — one level down: same card anatomy, no glint, no lead position.
+ *   3. the five prayers — five separate small cards with a line of text above them,
+ *      NOT five things inside one card. They are five acts, not one object.
+ *   4. the areas, then the index.
  *
- * The markup is deliberately built from .head / .wrap.lift.stack / .card / .bento /
- * .sec — the primitives every one of the twelve layouts transforms — so switching
- * layout RESTRUCTURES this screen instead of merely recolouring it.
+ * Built from .head / .wrap.lift.stack / .card / .bento / .sec — the primitives every
+ * one of the twelve layouts transforms — so switching layout RESTRUCTURES this screen
+ * rather than merely recolouring it. See docs/HOME-AND-NAVIGATION.md.
  *
  * Run before scripts/build-layouts-gallery.mjs; it rewrites screens.json's `home`.
  */
@@ -19,7 +22,13 @@ const { ar } = await import(R+'/src/core/num.js').then(m=>({ar:m.ar||m.toAr||m.a
 // Eastern Arabic numerals with U+066C as the thousands mark, per the product rule
 const E='٠١٢٣٤٥٦٧٨٩';
 const n = v => String(v).replace(/\d/g,d=>E[+d]).replace(/,/g,'٬');
-const g = v => n(v.toLocaleString('en-US'));
+/* g() groups with U+066C — for COUNTS. yr() never groups: a Hijri year with a thousands
+   mark (١٬٤٤٨) is simply wrong, and it shipped in the first render of this screen. */
+const g  = v => n(v.toLocaleString('en-US'));
+const yr = v => n(v);
+/* Every numeral sits in its own bidi isolate. Without it an Arabic-Indic run adjacent to
+   Arabic text reorders — the day number rendered as ٢٦٠ in the first pass. */
+const iso = t => `<span class="n">${t}</span>`;
 
 /* THE AREAS. الصلاة and الأقسام are TABS, so by the rule in HOME-AND-NAVIGATION.md §1
    they deliberately do NOT appear as cards here. */
@@ -28,7 +37,6 @@ const AREAS = [
   { k:'history',   ar:'التاريخ',       sub:'السيرة وأهل البيت',   ic:'doc',       game:true  },
   { k:'stories',   ar:'القصص',        sub:'قصص تُروى',           ic:'people',    game:true  },
   { k:'daily',     ar:'العمل اليوميّ', sub:'الأدعية والأذكار',    ic:'moon',      game:false },
-  { k:'will',      ar:'الوصيّة',       sub:'وثيقة تُكتب مرّة',     ic:'will',      game:false },
   { k:'ihtidar',   ar:'الاحتضار',      sub:'ما يُقال ويُفعل',      ic:'ihtidar',   game:false },
 ];
 
@@ -51,7 +59,7 @@ const view = `
   <div class="head-orn">${icon('astrolabe','orn orn-astro')}</div>
   <div class="head-row">
     <div class="grow">
-      <span class="kicker-ar">الجمعة · ${n('٢٦')} ربيع الآخر ${g(1448)}</span>
+      <span class="kicker-ar">الجمعة · ${iso(n(26))} ربيع الآخر ${iso(yr(1448))}</span>
       <h1 class="h1">مساء الخير، هادي</h1>
     </div>
     <button class="icon-btn">${icon('gear','ic')}</button>
@@ -60,20 +68,36 @@ const view = `
 
 <div class="wrap lift stack">
 
-  <!-- H-2 · THE CONTINUE CARD. Carries STATE, not just a name (Hulu). It is conditional:
-       with nothing to resume it is not rendered and nothing replaces it. -->
-  <button class="card card-tap card-glint" data-go="qada">
+  <!-- THE WILL IS FIRST. Hadi, 18 Sep: الوصيّة leads, القضاء drops a level.
+       It gets the same anatomy the qaḍāʾ card has — kicker · name · a figure · a bar ·
+       one line of plain state — because that anatomy is what makes a card resumable
+       rather than decorative (Hulu: a resume affordance must carry its progress).
+       What differs is the FIGURE: a will has no rate, so it cannot have a projected
+       date. Its honest equivalent is naming what is still missing (Airbnb). -->
+  <button class="card card-tap card-glint" data-go="will">
     <span class="kicker-ar">تابع</span>
     <div class="between">
-      <span class="h2">القضاء</span>
-      <span class="n n-md">بقي ${g(11270)}</span>
+      <span class="h2">الوصيّة</span>
+      <span class="n n-md">${n('٤')} من ${n('٩')} أقسام</span>
     </div>
-    <div class="bar"><i style="width:11%"></i></div>
-    <span class="hint">تاريخ الفراغ · رجب ${g(1458)} · على وتيرتك الحاليّة</span>
+    <div class="bar"><i style="width:44%"></i></div>
+    <span class="hint">بقي · الأوصياء · الثلث · الدفن</span>
   </button>
 
-  <!-- H-3 · the prayer strip. الصلاة is a TAB, so this is a status line, never a card. -->
-  <div class="card card-flush">
+  <!-- القضاء, one level down: same anatomy, quieter — no glint, no lead position. -->
+  <button class="card card-tap" data-go="qada">
+    <div class="between">
+      <span class="h3">القضاء</span>
+      <span class="n n-md">بقي ${iso(g(11270))}</span>
+    </div>
+    <div class="bar"><i style="width:11%"></i></div>
+    <span class="hint">تاريخ الفراغ · رجب ${iso(yr(1458))} · على وتيرتك الحاليّة</span>
+  </button>
+
+  <!-- THE PRAYER STRIP. Hadi, 18 Sep: no card wrapping the five. Each prayer is its own
+       small card; the only thing above them is a line of text. Cleaner, and it stops the
+       five prayers reading as one object when they are five separate acts. -->
+  <div class="sec">
     <div class="between">
       <span class="kicker-ar">صلوات اليوم</span>
       <span class="hint">العصر · بعد ${n('٣٤')} دقيقة</span>
@@ -91,7 +115,7 @@ const view = `
   <section class="sec">
     <div class="sec-head">
       <h2 class="h2">الأقسام</h2>
-      <span class="hint">${n('٦')} من ${n('٨')}</span>
+      <span class="hint">${n('٥')} من ${n('٨')}</span>
     </div>
     <div class="bento">
       ${card(AREAS[0],'b-wide')}
