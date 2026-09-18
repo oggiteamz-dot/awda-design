@@ -57,16 +57,19 @@ Rejected: Binance's home also carries promo banners and "Special for you" deals.
 | # | Element | Rule | Motion |
 |---|---|---|---|
 | H-1 | **Greeting + date** — Hijri, tabular, Eastern numerals | already built | none |
-| H-2 | **The continue card** — the last area used, with its own state in it | **Conditional. If there is nothing to resume, it is not rendered and nothing takes its place** (Hulu). Never a placeholder, never "start your journey" | `rise` 260ms, once |
-| H-3 | **The prayer strip** | Shown **only if the user prays through the app.** Not everyone will | `rise` |
-| H-4 | **The qaḍāʾ line** — one line, remaining + `تاريخ الفراغ` | **Shown only if المعايرة has been completed.** Hadi's own point: not all of them will be on prayer recovery. For everyone else this line does not exist | `countTo` on first paint only |
+| H-2 | **الوصيّة — the lead card.** Hadi, 18 Sep: the will is first | **Conditional** on there being a will in progress. If there is nothing to resume it is not rendered and nothing takes its place (Hulu). Never a placeholder, never "start your journey" | `rise` 260ms + `glint` once |
+| H-2b | **القضاء — one level down.** Same card anatomy, no glint, not the lead | **Shown only if المعايرة has been completed.** Not everyone will be on prayer recovery; for everyone else this card does not exist | `countTo` on first paint only |
+| H-3 | **The five prayers — five separate cards** with one line of text above them, **not five things inside one card.** Hadi, 18 Sep | Shown **only if the user prays through the app**. They are five acts, not one object, and a wrapper card makes them read as one | `rise` |
 | H-5 | **The card grid** — the areas, two across | Fixed editorial order. 6–8 cards maximum on home | `riseAll`, 42ms stagger, **first 4 only**; the rest appear without motion |
 | H-6 | **`كلّ الأقسام →`** — the full index | Afterpay/Binance. This is what makes "a lot of different stuff" survivable | — |
 
-### H-2, the continue card, in detail
+### H-2, the lead card, in detail
 
-It carries **the state, not just the name**: *"القضاء · بقي ١١٬٢٧٠"*, *"الوصيّة · ٤ من ٩
-أقسام"*, *"تاريخ الإسلام · الدرس ٣"*. Hulu puts a progress bar on the tile for exactly this
+Both H-2 and H-2b share one anatomy — kicker · name · a figure · a bar · one line of plain
+state — because that anatomy is what makes a card resumable rather than decorative. What
+differs is the **figure**: القضاء has a rate, so it can project `تاريخ الفراغ`; **a will has
+no rate and therefore cannot have a projected date.** Its honest equivalent is naming what is
+still missing — *"٤ من ٩ أقسام · بقي: الأوصياء · الثلث · الدفن"* (Airbnb). Hulu puts a progress bar on the tile for exactly this
 reason — a resume affordance that doesn't say how far along you are makes you open it to find
 out, which is the opposite of resuming.
 
@@ -77,8 +80,8 @@ impression for a launcher.
 
 ## 4. The areas — the card taxonomy
 
-From Hadi's own list, grouped. **This is a proposal, not a decision** — the grouping is the
-part most worth arguing about, because it decides how many cards home carries.
+From Hadi's own list, grouped. Decided by Hadi on 18 Sep: **separate areas**, each findable by name.
+الوصيّة is not in this table — it leads the screen as H-2 instead of sitting in the grid.
 
 | Area | Holds | Gamification |
 |---|---|---|
@@ -88,7 +91,6 @@ part most worth arguing about, because it decides how many cards home carries.
 | **التاريخ** | Islamic history | ✅ allowed |
 | **القصص** | stories | ✅ allowed |
 | **العمل اليوميّ** | day-to-day practice: duʿāʾ, adhkār, sunan | ⚠️ **barred** — these are acts, not lessons |
-| **الوصيّة** | the will | ⛔ barred |
 | **الاحتضار** | the time of dying | ⛔ barred, `stillness` |
 
 **The gamification line, restated because this change makes it easier to blur:** points,
@@ -180,3 +182,15 @@ markup that sits inside it.
    The first is warmer and slower to produce; the second scales to twenty areas without new
    artwork. My recommendation is icon + label, using the girih ornament system already in
    `ornament.js` for the icons, so new areas cost nothing to add.
+
+
+---
+
+## 10. Numerals — a rule this screen got wrong once
+
+**A year never takes the thousands mark; a count always does.** The first render of the
+launcher printed the Hijri year as `١٬٤٤٨` and the projected date as `رجب ١٬٤٥٨`, which is
+simply wrong. `g()` groups with U+066C and is for counts (`بقي ١١٬٢٧٠`); `yr()` never groups.
+
+**Every numeral sits in its own bidi isolate.** An Arabic-Indic run next to Arabic text
+reorders without one — the day number rendered as `٢٦٠` before the isolate was added.
