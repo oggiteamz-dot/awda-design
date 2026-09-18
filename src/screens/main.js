@@ -40,9 +40,19 @@ export const demo = {
   today: [1, 1, 0, 0, 0],                 // الصبح الظهر العصر المغرب العشاء
   owed: 11270, startOwed: 12500, perDay: 3,
   weekMadeUp: 12, offset: 0,
-  will: { done: 3, total: 7 },
+  will: { done: 3, total: 7, missing: ['الأوصياء', 'الثلث', 'الدفن', 'الدَّين'] },
   weeks: Array.from({ length: 49 }, (_, k) => (k > 44 ? 'x' : (k % 9 === 3 ? 'p' : (k % 7 === 5 ? 0 : 1)))),
 };
+/* The areas shown on home. الصلاة and الأقسام are TABS and deliberately absent —
+   see docs/HOME-AND-NAVIGATION.md §1. Adding an area is one row here. */
+export const AREAS = [
+  { k: 'knowledge', ar: 'المعرفة', sub: 'الفقه والعقيدة', ic: 'knowledge' },
+  { k: 'history', ar: 'التاريخ', sub: 'السيرة وأهل البيت', ic: 'doc' },
+  { k: 'stories', ar: 'القصص', sub: 'قصص تُروى', ic: 'people' },
+  { k: 'daily', ar: 'العمل اليوميّ', sub: 'الأدعية والأذكار', ic: 'moon' },
+  { k: 'ihtidar', ar: 'الاحتضار', sub: 'ما يُقال ويُفعل', ic: 'ihtidar' },
+];
+
 const PRAYERS = [['fajr', 'الصبح', '04:42'], ['dhuhr', 'الظهر', '12:08'], ['asr', 'العصر', '15:31'], ['maghrib', 'المغرب', '18:24'], ['isha', 'العشاء', '19:46']];
 const NOW_IDX = 2;
 
@@ -61,82 +71,62 @@ const pills = () => `<div class="pills">${PRAYERS.map(([k, ar, t], n) => `
 export function home(root, go) {
   setGround(null);
   const p = projectFinish(demo.owed, demo.perDay, demo.offset);
-  const left = demo.today.filter((x) => !x).length;
+  const w = demo.will;
   root.innerHTML = `
   ${head({
     kicker: hijToday(), title: `${greet()}، ${demo.name}`,
     actions: `<button class="icon-btn" data-go="#/account" aria-label="حسابي">${icon('account')}</button>
               <button class="icon-btn" data-styles aria-label="الأنماط">${icon('palette')}</button>`,
-    body: `<div class="row" style="position:relative;margin-top:20px;gap:16px;align-items:center">
-        <div style="width:96px;height:96px;flex:none;color:var(--head-ink)">
-          ${astroArc({ size: 96, from: -210, to: 30, value: .62, weight: 2.2, ticks: 24 })}</div>
-        <div class="grow">
-          <span class="kicker-ar">الصلاة التالية</span>
-          <div class="n-lg" style="color:var(--head-ink);margin-top:2px">العصر</div>
-          <span class="kicker-ar" style="margin-top:4px">بعد ١ س ١٤ د · ١٥:٣١</span>
-        </div></div>`,
   })}
   <div class="wrap lift stack">
-    ${card(`<div class="between" style="margin-bottom:14px">
+
+    <!-- الوصيّة LEADS. A will has no rate, so it cannot project a date the way
+         القضاء can; its honest equivalent is naming what is still missing. -->
+    <button class="card card-tap card-glint" data-go="#/will">
+      <span class="kicker-ar">تابع</span>
+      <div class="between" style="margin-top:4px">
+        <span class="h2">الوصيّة</span>
+        <span class="n n-md">${toAr(w.done)} من ${toAr(w.total)} أقسام</span>
+      </div>
+      <div class="bar" style="margin-top:12px"><i style="width:${(w.done / w.total * 100).toFixed(0)}%"></i></div>
+      <p class="hint" style="margin-top:8px">بقي · ${w.missing.map(esc).join(' · ')}</p>
+    </button>
+
+    <!-- القضاء, one level down: same anatomy, no glint, not the lead. -->
+    <button class="card card-tap" data-go="#/qada">
+      <div class="between">
+        <span class="h3">القضاء</span>
+        <span class="n n-md">بقي <span id="owed">٠</span></span>
+      </div>
+      <div class="bar" style="margin-top:12px"><i style="width:${Math.round(100 * (1 - demo.owed / demo.startOwed))}%"></i></div>
+      <p class="hint" style="margin-top:8px">تاريخ الفراغ · ${p ? fmtHijri(p.hijri) : '—'} · على وتيرتك الحاليّة</p>
+    </button>
+
+    <!-- The five prayers are FIVE cards with a line of text above them, never five
+         things inside one card. They are five acts, not one object. -->
+    <div class="sec">
+      <div class="between" style="margin-bottom:10px">
         <span class="kicker-ar">صلوات اليوم</span>
-        <span class="tag">${left ? `بقيت ${toAr(left)}` : 'اكتملت'}</span></div>
+        <span class="hint">العصر · ١٥:٣١</span>
+      </div>
       ${pills()}
-      <p class="hint" style="margin-top:12px">اضغط لتسجيل ما صلّيت. لا شيء هنا يتحوّل إلى اللون الأحمر، ولا يُحسب تتابع.</p>`)}
-
-    <div class="bento" style="margin-top:12px">
-      ${facetCard(`<div class="cell" style="height:100%">
-        <div><span class="kicker-ar">الباقي من القضاء</span>
-          <div class="n-hero" id="owed" style="margin-top:8px;color:var(--acc);font-size:52px">٠</div>
-          <span class="kicker-ar" style="margin-top:6px">صلاة</span></div>
-        <div>
-          <div class="bar"><i style="width:${Math.round(100 * (1 - demo.owed / demo.startOwed))}%"></i></div>
-          <p class="hint" style="margin-top:8px">قضيتَ ${toAr(demo.weekMadeUp)} صلاة هذا الأسبوع — الرقم ينزل، ولا يصعد.</p>
-        </div></div>`, 'b-hero card-tap')}
-
-      <div class="card card-tap cell" data-go="#/will">
-        <div style="color:var(--acc)">${icon('will', 'ic-lg')}</div>
-        <div><b class="h3">الوصيّة</b>
-          <p class="hint">${toAr(demo.will.done)} من ${toAr(demo.will.total)} أقسام</p></div>
-        <div class="bar"><i style="width:${(demo.will.done / demo.will.total * 100).toFixed(0)}%"></i></div>
-      </div>
-
-      <div class="card card-tap cell" data-go="#/knowledge">
-        <div style="color:var(--acc)">${icon('knowledge', 'ic-lg')}</div>
-        <div><b class="h3">المعرفة</b><p class="hint">٤ صفحات جديدة</p></div>
-        <span class="tag tag-acc">لم تُقرأ</span>
-      </div>
-
-      <div class="card b-wide" data-go="#/qada">
-        <div class="between"><div>
-          <span class="kicker-ar">على وتيرتك الحاليّة</span>
-          <p class="h3" style="margin-top:4px">${p ? fmtHijri(p.hijri) : '—'}</p>
-          <p class="hint">${toAr(demo.perDay)} صلوات في اليوم · نحو ${toAr(Math.round(p.years * 10) / 10)} سنة</p>
-        </div><span style="color:var(--soft)">${icon('next')}</span></div>
-      </div>
     </div>
 
+    <!-- THE AREAS. الصلاة and الأقسام have tabs, so by the navigation rule they do
+         not also appear here: a tab is a place you return to, a card is a place you go to. -->
     <div class="sec">
-      ${secHead('هذا الأسبوع وما قبله', '<span class="kicker-ar">٤٩ يوماً</span>')}
-      ${card(`<div class="dotgrid">${demo.weeks.map((v) => `<i class="dot" data-v="${v}"></i>`).join('')}</div>
-        <div class="row" style="margin-top:14px;gap:16px;flex-wrap:wrap">
-          <span class="row" style="gap:6px"><i class="dot" data-v="1" style="width:11px"></i><span class="hint">كاملة</span></span>
-          <span class="row" style="gap:6px"><i class="dot" data-v="p" style="width:11px"></i><span class="hint">بعضها</span></span>
-          <span class="row" style="gap:6px"><i class="dot" data-v="0" style="width:11px"></i><span class="hint">لا شيء</span></span>
-          <span class="row" style="gap:6px"><i class="dot" data-v="x" style="width:11px"></i><span class="hint">قادم</span></span>
-        </div>
-        <p class="hint" style="margin-top:12px">نقطة لكلّ يوم، بلا مجموع وبلا تقييم. النمط يُرى، ولا يُحاسَب عليه أحد.</p>`)}
-    </div>
-
-    <div class="sec">
-      ${secHead('جديد في المعرفة', '<button class="btn btn-sm btn-quiet" data-go="#/knowledge">الكلّ</button>')}
-      <div class="shelf">
-        ${[['ما الفرق بين القضاء والأداء؟', 'القضاء والفوائت'], ['كيف تُحسب سنة التكليف؟', 'أساسيات الصلاة'], ['الوصيّة الواجبة والمستحبّة', 'الوصيّة والميراث'], ['تلقين المحتضر', 'الموت وما بعده']]
-      .map(([t, s]) => `<div class="card card-tap" data-go="#/knowledge" style="height:170px;display:flex;flex-direction:column;justify-content:space-between">
-            <span style="color:var(--acc)">${icon('doc')}</span>
-            <div><b style="font-family:Kufi;font-size:15px;line-height:1.4;display:block">${t}</b>
-            <span class="hint" style="font-size:12px">${s}</span></div></div>`).join('')}
+      ${secHead('الأقسام', `<span class="kicker-ar">${toAr(AREAS.length)} من ${toAr(AREAS.length + 3)}</span>`)}
+      <div class="bento">
+        ${AREAS.map((a, i) => `
+        <button class="card card-tap cell ${i === 0 ? 'b-wide' : ''}" data-go="#/${a.k}">
+          <span style="color:var(--acc)">${icon(a.ic, 'ic-lg')}</span>
+          <b class="h3">${a.ar}</b>
+          <span class="hint">${a.sub}</span>
+        </button>`).join('')}
       </div>
     </div>
+
+    <button class="btn btn-ghost btn-block" data-go="#/index">كلّ الأقسام ${icon('next', 'ic-sm')}</button>
     <div style="height:20px"></div>
   </div>`;
   animateIn(root);
