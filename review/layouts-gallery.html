@@ -1,0 +1,741 @@
+<title>اثنا عشر تخطيطاً لعَوْدة</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Amiri+Quran&display=swap">
+<style id="awda-system">
+/* The product's own stylesheet, verbatim except for the rescope
+   documented in layout.css: body[data-x] becomes [data-x] so twelve layouts can
+   be rendered on one page. Nothing else is altered. */
+/* ===========================================================================
+   عودة / AWDA — the stylesheet.
+
+   Written RTL-first. Not "RTL-supported" — RTL-first: the logical properties
+   are the only ones used, `start` means right, and forward chevrons point LEFT.
+   An Arabic app built by mirroring a Latin one is legible and still feels
+   translated, and this audience can tell.
+
+   Nothing here knows a palette. Every colour is a var() set by theme.js from
+   src/core/palettes.js, which is the only file in the product where a colour may
+   exist. A gate in the main repo fails the build on any hex in a screen file.
+   =========================================================================== */
+
+/* ── TYPE ───────────────────────────────────────────────────────────────────
+   Three faces, and a rule that is never broken:
+   NEVER SET QURʾĀN IN THE UI FACE, AND NEVER SET UI IN THE QURʾĀN FACE.
+   The typographic separation IS the visual distinction a verse is required to
+   have — it must never be possible to mistake a verse for our own copy.
+
+   Noto Kufi Arabic  display. Geometric, architectural, engineered. Kufi is a
+                     display script by function; it is never used for body.
+   IBM Plex Sans Ar  UI and body. A naskh-based UI face, and — the reason it is
+                     the right one here rather than Cairo or Tajawal — Plex was
+                     drawn as a technical face for an engineering company, so it
+                     carries the instrument register into the body copy.
+   IBM Plex Mono     the instrument label: ALL CAPS, letterspaced, tiny. The
+                     WHOOP/Oura move, and it is what makes a screen read as
+                     measured rather than decorated.
+   Amiri Quran       Qurʾānic text ONLY. Never a button, never a heading.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+:root{
+  /* The Major Third scale (1.333) the UAE Design System uses for Arabic. A 1.2
+     ratio reads "utility" and a 2.5rem clamp reads "editorial"; 1.333 reads
+     "document", which is what a will and a fiqh page both are. */
+  --t-xs:12px; --t-sm:14px; --t-base:16px; --t-md:19px; --t-lg:23px;
+  --t-xl:30px; --t-2xl:40px; --t-3xl:54px; --t-4xl:68px;
+  /* Arabic needs 1.5 minimum. Letters are distinguished by marks ABOVE and
+     BELOW the baseline, so tight leading collides tashkīl with the next line. */
+  --lh:1.65; --lh-tight:1.35; --lh-display:1.2;
+  --sp:8px; --gut:16px; --col:min(430px,100vw);
+  --r:20px; --r-sm:14px; --r-lg:28px; --r-pill:999px;
+  --dur:260ms; --ease:cubic-bezier(.22,1,.36,1);
+  --tap:48px;   /* every interactive target. Not 44 — this app has older users. */
+}
+
+*,*::before,*::after{box-sizing:border-box}
+.phone{
+  font-family:Plex,"IBM Plex Sans Arabic",system-ui,sans-serif;
+  font-size:var(--t-base);line-height:var(--lh);color:var(--ink);background:var(--bg);
+  direction:rtl;text-align:start;-webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+/* ── TYPE ROLES ──────────────────────────────────────────────────────────── */
+.display{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-weight:700;line-height:var(--lh-display);letter-spacing:-.01em}
+.h1{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:var(--t-xl);line-height:var(--lh-tight);margin:0}
+.h2{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-weight:600;font-size:var(--t-lg);line-height:var(--lh-tight);margin:0}
+.h3{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-weight:600;font-size:var(--t-md);line-height:var(--lh-tight);margin:0}
+.body{font-size:var(--t-base);line-height:var(--lh);margin:0}
+.soft{color:var(--soft)}
+/* The instrument label. Latin/mono, uppercase, letterspaced, small.
+   Arabic does not have upper case, so the Arabic form of this label uses the
+   Kufi face at small size with tracking instead — same role, honest means. */
+.kicker{font-family:Mono,'IBM Plex Mono',ui-monospace,monospace;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);display:block}
+.kicker-ar{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-size:12px;font-weight:600;letter-spacing:0;color:var(--soft);display:block}
+/* Every numeral in the product. Tabular so nothing shifts while a value ticks. */
+.n{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1;letter-spacing:0;unicode-bidi:isolate}
+.n-hero{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:var(--t-4xl);line-height:1;font-variant-numeric:tabular-nums}
+.n-lg{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:var(--t-2xl);line-height:1.05;font-variant-numeric:tabular-nums}
+.n-md{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-weight:600;font-size:var(--t-lg);font-variant-numeric:tabular-nums}
+
+/* ── QURʾĀNIC TEXT ───────────────────────────────────────────────────────────
+   Rules, from the research, that are not style preferences:
+   · Its own face, its own field, larger, with generous leading, and always with
+     the sūra:āya reference. It must be impossible to mistake for our copy.
+   · NEVER the label of a tappable control. A button label is UI furniture, and
+     tapping "through" a verse to get somewhere is exactly the "adornment, not
+     exhortation" failure. `.verse` refuses to be a button: pointer-events off.
+   · The basmala renders AS VERSE 1, numbered, in this same face — not as a
+     decorative header. In the Imāmī position it IS a verse of every sūra but
+     al-Barāʾa, and most Sunni-default apps get this wrong. It is invisible to
+     outsiders and Shia users notice it.
+   · Rendered pixels carry the ruling, so `[data-quran="off"]` suppresses
+     every verse in the product — genuinely useful for a menstruating user or
+     someone without wuḍūʾ, and no app in this category offers it.           */
+.verse{font-family:Quran,'Amiri Quran',serif;font-size:var(--t-lg);line-height:2.1;color:var(--ink);
+  padding:calc(var(--sp)*2.5) calc(var(--sp)*2.5) calc(var(--sp)*2);
+  border-inline-start:2px solid var(--rule);background:var(--card2);border-radius:var(--r-sm);
+  pointer-events:none;user-select:text;margin:0}
+.verse-ref{font-family:Mono,'IBM Plex Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.08em;color:var(--soft);display:block;margin-top:10px;pointer-events:auto}
+[data-quran="off"] .verse{display:none}
+[data-quran="off"] .verse-hidden-note{display:block}
+.verse-hidden-note{display:none;font-size:var(--t-sm);color:var(--soft);padding:12px 14px;border:1px dashed var(--line);border-radius:var(--r-sm)}
+
+/* ── THE SHELL ───────────────────────────────────────────────────────────── */
+.phone .app{max-width:var(--col);margin-inline:auto;min-height:100dvh;position:relative;
+  padding-bottom:calc(76px + env(safe-area-inset-bottom));background:var(--bg)}
+
+/* THE SATURATED BLOCK. This is the structural idea the whole palette system
+   rests on: colour lives up here, in a block that carries display type only,
+   and every word the user must actually read sits on a white card below it.
+   That is why these palettes can be bright without costing a point of contrast. */
+.head{position:relative;background:var(--head);color:var(--head-ink);overflow:hidden;
+  padding:calc(env(safe-area-inset-top) + 18px) var(--gut) 56px;
+  border-end-start-radius:var(--r-lg);border-end-end-radius:var(--r-lg)}
+.head .soft,.head .kicker,.head .kicker-ar{color:var(--head-soft)}
+.head-orn{position:absolute;inset-block-start:-21%;inset-inline-end:-17%;width:72%;aspect-ratio:1;
+  color:var(--head-ink);opacity:.20;pointer-events:none}
+.head-orn svg{width:100%;height:100%}
+.orn-kufic{position:absolute;inset:0;width:100%;height:100%;color:var(--head-ink);pointer-events:none}
+.head-row{position:relative;display:flex;align-items:center;gap:12px;min-height:var(--tap)}
+.head-row .grow{flex:1}
+/* The card that overlaps the block's lower edge. Measured on Monzo, Copilot,
+   Rocket Money and Buddy: the overlap is what stops the bright block reading as
+   a banner and makes it read as the app's own ground. */
+.lift{margin-block-start:-40px;position:relative;z-index:2}
+
+.wrap{padding-inline:var(--gut)}
+.stack{display:flex;flex-direction:column;gap:12px}
+.stack-lg{display:flex;flex-direction:column;gap:20px}
+.row{display:flex;align-items:center;gap:10px}
+.between{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.grow{flex:1;min-width:0}
+.sec{margin-block-start:26px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-block-end:12px}
+/* المدّ: the rule grows from the RIGHT, the direction the script runs. */
+.rule{height:1px;background:var(--rule);opacity:.5;transform-origin:right center;margin-block-start:10px}
+
+/* ── CARD ────────────────────────────────────────────────────────────────── */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:calc(var(--sp)*2);position:relative;overflow:hidden}
+.card-flush{padding:0}
+.card2{background:var(--card2)}
+.card-tap{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform 140ms var(--ease)}
+.card-tap:active{transform:scale(.985)}
+.card-glint{background-image:linear-gradient(105deg,transparent 40%,color-mix(in srgb,var(--ink) 6%,transparent) 50%,transparent 60%);
+  background-size:220% 100%;background-position:200% 0;background-repeat:no-repeat}
+.orn-facet{position:absolute;inset:0;width:100%;height:100%;color:var(--ink);pointer-events:none}
+
+/* ── BUTTONS ─────────────────────────────────────────────────────────────── */
+.btn{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-weight:600;font-size:var(--t-base);min-height:var(--tap);
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:0 20px;border-radius:var(--r-pill);border:1px solid transparent;cursor:pointer;
+  background:var(--acc);color:var(--acc-ink);transition:transform 140ms var(--ease),opacity 140ms}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn-block{width:100%}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-quiet{background:var(--card2);color:var(--ink);border-color:transparent}
+.btn-on-head{background:var(--head-ink);color:var(--head-flat)}
+/* NOT red. Red is martyrdom and vengeance, and in taʿziya convention it is the
+   villain's colour. A destructive action gets a charcoal outline instead — and
+   there is no red anywhere in this product, including here. */
+.btn-danger{background:transparent;color:var(--ink);border-color:var(--ink);border-width:1.5px}
+.btn-sm{min-height:38px;font-size:var(--t-sm);padding:0 14px}
+.icon-btn{width:var(--tap);height:var(--tap);display:grid;place-items:center;border-radius:var(--r-pill);
+  border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;flex:none}
+.head .icon-btn{background:color-mix(in srgb,var(--head-ink) 14%,transparent);border-color:color-mix(in srgb,var(--head-ink) 24%,transparent);color:var(--head-ink)}
+.ic{width:22px;height:22px;flex:none}
+.ic-lg{width:28px;height:28px}
+.ic-sm{width:18px;height:18px}
+
+/* ── TAB BAR ─────────────────────────────────────────────────────────────── */
+/* الاحتضار gets a permanent tab, and حسابي does not. Someone opens الاحتضار at
+   the worst moment of their life, possibly with no signal. It gets one tap and
+   it never moves. حسابي is a place you visit twice a year — it lives in the top
+   bar as an avatar. */
+.tabs{position:absolute;inset-block-end:0;inset-inline:0;max-width:var(--col);margin-inline:auto;z-index:40;
+  display:grid;grid-template-columns:repeat(5,1fr);
+  background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(18px);
+  border-block-start:1px solid var(--line);padding-block-end:env(safe-area-inset-bottom)}
+.tab{min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  background:none;border:0;color:var(--soft);font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-size:11px;font-weight:600;cursor:pointer;
+  padding:0;transition:color 160ms var(--ease)}
+.tab[aria-current="page"]{color:var(--acc)}
+.tab[aria-current="page"] .tab-dot{opacity:1;transform:scaleX(1)}
+.tab-dot{width:22px;height:2px;border-radius:2px;background:currentColor;opacity:0;transform:scaleX(.3);transition:all 200ms var(--ease)}
+
+/* ── PRAYER PILLS ────────────────────────────────────────────────────────────
+   Five across 358px of content is 66px each — the single hardest constraint in
+   the app. They are laid out as a 5-column grid with the Arabic name at 12px,
+   which fits الصبح الظهر العصر المغرب العشاء without truncation at 390px.
+   A ticked prayer fills with the accent. An UNTICKED one stays neutral: it never
+   turns red, never breaks a chain, never accuses. NO-GO 2 and 3.             */
+.pills{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.pill{min-height:74px;border-radius:var(--r-sm);border:1.5px solid var(--line);background:var(--card);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;
+  font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-size:12px;font-weight:600;color:var(--ink);padding:6px 2px;
+  transition:background 180ms var(--ease),border-color 180ms var(--ease),color 180ms var(--ease)}
+.pill .t{font-family:Mono,'IBM Plex Mono',ui-monospace,monospace;font-size:10px;color:var(--soft);letter-spacing:.04em}
+.pill[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+.pill[aria-pressed="true"] .t{color:var(--acc-ink);opacity:.8}
+.pill[data-now="1"]{border-color:var(--acc);border-style:dashed}
+.pill-check{width:16px;height:16px;opacity:0;transition:opacity 160ms}
+.pill[aria-pressed="true"] .pill-check{opacity:1}
+
+/* ── LIST / REGISTER ─────────────────────────────────────────────────────────
+   السجل. 44px rows, edge-to-edge hairlines, label right, figure left, tabular.
+   The atlas calls this the best screen in the catalogue for the qaḍāʾ ledger and
+   it is right: a debt is a register, and a register is rows.                 */
+.reg{display:flex;flex-direction:column}
+.reg-row{display:flex;align-items:center;gap:12px;min-height:52px;padding:8px 2px;
+  border-block-end:1px solid var(--line);background:none;border-inline:0;border-block-start:0;
+  width:100%;text-align:start;color:var(--ink);font:inherit;cursor:pointer}
+.reg-row:last-child{border-block-end:0}
+.reg-row .fig{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-weight:600;font-variant-numeric:tabular-nums;margin-inline-start:auto;unicode-bidi:isolate}
+.reg-row .ic{color:var(--soft)}
+.reg-row[data-static]{cursor:default}
+
+/* ── BENTO ───────────────────────────────────────────────────────────────────
+   الشبكة. 2 columns at 173px, 24px radius, one 2×2 hero. Designed AT 2 columns —
+   the documented failure of bento on phones is shipping a collapsed 4-column
+   desktop grid. Content in a cell must compress to a phrase or a number.     */
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:12px;grid-auto-rows:minmax(104px,auto)}
+.bento .b-hero{grid-column:span 2;grid-row:span 2}
+.bento .b-wide{grid-column:span 2}
+.bento .cell{display:flex;flex-direction:column;justify-content:space-between;gap:8px}
+
+/* ── SHELF ───────────────────────────────────────────────────────────────── */
+.shelf{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding-inline:var(--gut);margin-inline:calc(var(--gut)*-1);
+  scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.shelf::-webkit-scrollbar{display:none}
+.shelf>*{scroll-snap-align:start;flex:0 0 auto;width:158px}
+
+/* ── FIELDS ──────────────────────────────────────────────────────────────── */
+.field{display:flex;flex-direction:column;gap:7px}
+.label{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-size:var(--t-sm);font-weight:600;color:var(--ink)}
+.hint{font-size:var(--t-sm);color:var(--soft);line-height:1.55}
+.input{min-height:var(--tap);border-radius:var(--r-sm);border:1.5px solid var(--line);background:var(--card);
+  color:var(--ink);font:inherit;padding:10px 14px;width:100%;text-align:start}
+.input:focus-visible{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+select.input{appearance:none;background-image:none}
+/* OTP: LTR inside an RTL page, because a code is a sequence of Western digits
+   entered left to right even by someone typing Arabic. Getting this wrong is
+   the classic Arabic-app bug. */
+.otp{display:flex;gap:9px;direction:ltr;justify-content:center}
+.otp input{width:46px;height:58px;text-align:center;font-family:Mono,'IBM Plex Mono',ui-monospace,monospace;font-size:24px;
+  border-radius:var(--r-sm);border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.otp input:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+
+.choice{display:flex;align-items:center;gap:12px;min-height:var(--tap);width:100%;
+  padding:12px 16px;border-radius:var(--r-sm);border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);font:inherit;text-align:start;cursor:pointer;
+  transition:border-color 160ms var(--ease),background 160ms var(--ease)}
+.choice[aria-pressed="true"]{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 8%,var(--card))}
+.choice .tick{margin-inline-start:auto;color:var(--acc);opacity:0}
+.choice[aria-pressed="true"] .tick{opacity:1}
+
+.slider{width:100%;appearance:none;height:34px;background:transparent;cursor:pointer}
+.slider::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:var(--line)}
+.slider::-webkit-slider-thumb{appearance:none;width:30px;height:30px;border-radius:50%;background:var(--acc);
+  border:3px solid var(--card);margin-top:-13px;box-shadow:0 1px 5px rgba(0,0,0,.18)}
+.slider::-moz-range-track{height:5px;border-radius:3px;background:var(--line)}
+.slider::-moz-range-thumb{width:30px;height:30px;border-radius:50%;background:var(--acc);border:3px solid var(--card)}
+
+/* ── PROGRESS ────────────────────────────────────────────────────────────────
+   A bar is always a DEBT DECREASING TOWARD ZERO, never a score accumulating.
+   That distinction is the difference between an app that helps and an app that
+   keeps count of your sins. Every ring in the product is scoped to a day or a
+   week, never to the lifetime debt: a ring implies a closable goal, and a
+   lifetime ring at 4% is an accusation.                                      */
+.bar{height:7px;border-radius:4px;background:var(--card2);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--acc);border-radius:4px;transform-origin:right center}
+.steps{display:flex;gap:5px}
+.steps>i{height:3px;flex:1;border-radius:2px;background:var(--line)}
+.steps>i[data-on]{background:var(--acc)}
+
+/* ── BADGE / TAG ─────────────────────────────────────────────────────────── */
+.tag{display:inline-flex;align-items:center;gap:6px;font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-size:12px;font-weight:600;
+  padding:5px 11px;border-radius:var(--r-pill);background:var(--card2);color:var(--soft)}
+.tag-acc{background:color-mix(in srgb,var(--acc) 13%,transparent);color:var(--acc)}
+.tag-on-head{background:color-mix(in srgb,var(--head-ink) 16%,transparent);color:var(--head-ink)}
+
+/* ── SHEET ───────────────────────────────────────────────────────────────── */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:60;opacity:0;transition:opacity 220ms var(--ease)}
+.scrim[data-open]{opacity:1}
+.sheet{position:fixed;inset-block-end:0;inset-inline:0;max-width:var(--col);margin-inline:auto;z-index:61;
+  background:var(--card);border-start-start-radius:var(--r-lg);border-start-end-radius:var(--r-lg);
+  padding:10px var(--gut) calc(20px + env(safe-area-inset-bottom));
+  max-height:86dvh;overflow-y:auto;box-shadow:0 -12px 40px rgba(0,0,0,.20)}
+.sheet-grab{width:38px;height:4px;border-radius:2px;background:var(--line);margin:4px auto 14px}
+
+/* ── SWATCH ──────────────────────────────────────────────────────────────── */
+.swatches{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sw{display:flex;align-items:center;gap:11px;padding:10px;border-radius:var(--r-sm);
+  border:1.5px solid var(--line);background:var(--card);cursor:pointer;text-align:start;color:var(--ink);font:inherit}
+.sw[aria-pressed="true"]{border-color:var(--acc)}
+.sw-chip{width:42px;height:42px;border-radius:11px;flex:none;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.12)}
+.sw-chip i{position:absolute;inset-block-end:0;inset-inline:0;height:40%;background:#fff}
+.sw-name{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-weight:600;font-size:var(--t-sm);display:block}
+.sw-meta{font-family:Mono,'IBM Plex Mono',ui-monospace,monospace;font-size:10px;color:var(--soft);letter-spacing:.04em}
+
+/* ── THE TWO FIXED GROUNDS ───────────────────────────────────────────────── */
+/* الوثيقة — the document register. Justified matn, a margin rail, numbered
+   articles, no gold. A will is a legal instrument and should look like one. */
+[data-ground="doc"]{--r:10px;--r-sm:8px;--r-lg:12px}
+[data-ground="doc"] .card{border-width:1px}
+[data-ground="doc"] .head{border-end-start-radius:0;border-end-end-radius:0;
+  border-block-end:1px solid var(--line);padding-block-end:24px}
+[data-ground="doc"] .lift{margin-block-start:14px}
+[data-ground="doc"] .head .icon-btn,[data-ground="shroud"] .head .icon-btn{background:transparent;border-color:var(--line);color:var(--ink)}
+[data-ground="doc"] .display,[data-ground="doc"] .h1,[data-ground="doc"] .h2{letter-spacing:0}
+.matn{line-height:1.95;text-align:justify;text-justify:inter-word}
+.article{display:grid;grid-template-columns:30px 1fr;gap:12px;padding-block:12px;border-block-end:1px solid var(--line)}
+.article .no{font-family:Mono,'IBM Plex Mono',ui-monospace,monospace;font-size:12px;color:var(--soft);padding-top:4px}
+
+/* الكفن — iḥtiḍār. Near-white, huge whitespace, no chrome, ≥20px body, ≥56px
+   targets, one green element. WHITE IS THE COLOUR OF DEATH HERE, NOT BLACK:
+   white is the kafan, and black is makrūh outside the narrow mourning
+   exception, so a black screen would be both wrong and jarring. Restraint IS
+   the design on this ground — it is also the least noisy thing to read while
+   your hands are shaking. */
+[data-ground="shroud"]{--t-base:20px;--tap:56px;--lh:1.8}
+[data-ground="shroud"] .card{border:0;padding:0;background:transparent}
+[data-ground="shroud"] .head{background:var(--head);color:var(--head-ink);
+  border-end-start-radius:0;border-end-end-radius:0;padding-block-end:20px}
+[data-ground="shroud"] .head-orn,[data-ground="shroud"] .orn-kufic{display:none}
+[data-ground="shroud"] .lift{margin-block-start:0}
+[data-ground="shroud"] .tabs{background:var(--card)}
+[data-ground="shroud"] .wrap{padding-inline:26px}
+[data-motion="still"] *{animation:none!important;transition:none!important}
+
+/* ── LAYOUT AXIS ─────────────────────────────────────────────────────────────
+   Layout and palette are ORTHOGONAL. That is the difference between seventeen
+   skins and a skin system: a palette is a palette, and structure lives on its
+   own axis. The previous version bundled one of eight home arrangements into
+   each of seventeen palettes, which is exactly why all seventeen looked like
+   the same app.                                                              */
+[data-layout="manuscript"]{--r:0;--r-sm:0;--r-lg:0}
+[data-layout="manuscript"] .card{border-inline:0;border-block-start:0;border-block-end:1px solid var(--line);padding-inline:0;background:transparent}
+[data-layout="manuscript"] .wrap{padding-inline:calc(var(--gut) + 22px)}
+[data-layout="manuscript"] .head{border-radius:0}
+
+[data-layout="register"]{--r:0;--r-sm:0}
+[data-layout="register"] .card{border-inline:0;border-radius:0;padding-inline:0;background:transparent}
+[data-layout="register"] .bento{grid-template-columns:1fr;gap:0}
+[data-layout="register"] .bento .b-hero,[data-layout="register"] .bento .b-wide{grid-column:span 1;grid-row:span 1}
+
+[data-layout="editorial"]{--r:8px}
+[data-layout="editorial"] .sec{margin-block-start:44px}
+[data-layout="editorial"] .h1{font-size:var(--t-2xl)}
+[data-layout="editorial"] .card{border:0;padding-inline:0;background:transparent;border-block-end:1px solid var(--line);border-radius:0}
+
+[data-layout="khat"]{--r:0}
+[data-layout="khat"] .card{border:0;background:transparent;padding-inline:0}
+[data-layout="khat"] .wrap{padding-inline:30px}
+[data-layout="khat"] .h2{font-size:var(--t-xl)}
+
+[data-layout="brut"]{--r:0;--r-sm:0;--r-lg:0;--r-pill:0}
+[data-layout="brut"] .card,[data-layout="brut"] .choice,[data-layout="brut"] .input{border-width:2.5px;box-shadow:5px 5px 0 0 var(--ink)}
+[data-layout="brut"] .btn{border:2.5px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink)}
+[data-layout="brut"] .btn:active{transform:translate(-3px,3px);box-shadow:none}
+
+[data-layout="portal"] .card{border-radius:var(--r-lg) var(--r-lg) var(--r-sm) var(--r-sm)}
+[data-layout="portal"] .pill{border-start-start-radius:30px;border-start-end-radius:30px}
+[data-layout="portal"] .sw-chip{border-start-start-radius:20px;border-start-end-radius:20px}
+
+[data-layout="bento"] .stack>.card{border-radius:var(--r-lg)}
+
+/* ── SURFACE AXIS ────────────────────────────────────────────────────────── */
+[data-surface="flat"] .card{box-shadow:none;border-color:transparent;background:var(--card2)}
+[data-surface="hard"] .card{box-shadow:4px 4px 0 0 var(--line);border-width:1.5px}
+[data-surface="none"] .card{border-color:transparent;box-shadow:none;background:transparent;padding-inline:0}
+[data-surface="glass"] .card{backdrop-filter:blur(14px);
+  background:color-mix(in srgb,var(--card) 82%,transparent);box-shadow:0 2px 18px rgba(0,0,0,.05)}
+
+/* ── UTILITY ─────────────────────────────────────────────────────────────── */
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+.empty{text-align:center;padding:40px 20px;color:var(--soft)}
+.empty .ic{width:36px;height:36px;color:var(--acc);margin-block-end:12px}
+.astro-label{font-family:Kufi,'Noto Kufi Arabic',sans-serif;font-size:13px;font-weight:600;fill:currentColor}
+.dotgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.dot{aspect-ratio:1;border-radius:3px;background:var(--card2)}
+.dot[data-v="1"]{background:var(--acc)}
+.dot[data-v="p"]{background:color-mix(in srgb,var(--acc) 45%,var(--card2))}
+.dot[data-v="x"]{background:var(--card2);border:1px solid var(--line)}
+
+/* ===========================================================================
+   عَوْدة / AWDA — layout.css — THE SIX THAT WERE NEVER BUILT.
+
+   WHY THIS FILE EXISTS AT ALL, AND WHY IT IS NOT IN style.css.
+   Twelve layouts were declared in layouts.js. Six of them had CSS; five had
+   literally none (cards · shelves · path · ring · sheets) and portal had three
+   rules that rounded some corners without restructuring anything. So half the
+   axis was a name and a note. Anyone comparing the twelve was comparing six
+   designs against six aliases of the default.
+
+   style.css was already 396 lines against a stated hard cap of 300. Adding six
+   layouts to it would have pushed it past 550 and quietly retired the rule, so
+   the six live here instead and both files stay honest.
+
+   SELECTORS ARE WRITTEN [data-layout="x"], NOT [data-layout="x"].
+   The attribute can then sit on ANY ancestor, which is what lets a review
+   surface render twelve layouts on one page side by side. On the app itself it
+   still lands on <body> and behaves identically.
+
+   NO COLOUR IN THIS FILE. Not one hex. Every value is a var() from palettes.js,
+   which remains the only file in the product where a colour may exist.
+   Logical properties only — `start` is the right-hand side.
+   =========================================================================== */
+
+/* ── البطاقات · CARDS — the reference the others are measured against ────────
+   Every block is a discrete object with air around it. The bento hero stops
+   spanning, so nothing is ranked by size and the eye is free to compare. This
+   is the layout to pick when nothing on the screen is more important than
+   anything else. Best on المعرفة, and the fair baseline for الرئيسيّة.      */
+[data-layout="cards"]{--r:18px;--r-sm:14px;--r-lg:22px}
+[data-layout="cards"] .stack{gap:14px}
+[data-layout="cards"] .sec{margin-block-start:30px}
+[data-layout="cards"] .card{box-shadow:0 1px 2px var(--grid),0 8px 22px -14px var(--grid)}
+[data-layout="cards"] .bento{grid-template-columns:1fr 1fr;gap:14px}
+[data-layout="cards"] .bento .b-hero{grid-column:span 2;grid-row:span 1}
+[data-layout="cards"] .bento .b-wide{grid-column:span 2}
+/* a register row is a row inside a list; here the list dissolves into cards */
+[data-layout="cards"] .reg{gap:10px}
+[data-layout="cards"] .reg-row{background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:12px 14px;min-height:var(--tap)}
+[data-layout="cards"] .reg-row:last-child{border-block-end:1px solid var(--line)}
+[data-layout="cards"] .card-flush{padding:0;background:transparent;border:0;box-shadow:none}
+
+/* ── الرفوف · SHELVES — a row per group, scrolled sideways ───────────────────
+   Vertical space is the scarcest thing on a phone, so anything that is a SET
+   rather than a SEQUENCE goes sideways. Scroll-snap makes it feel like a shelf
+   and not a slip. Best on المعرفة, where the user is browsing, never on القضاء,
+   where hiding rows off-screen would hide a debt.                            */
+[data-layout="shelves"] .bento{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;scrollbar-width:none;padding-block-end:4px;
+  margin-inline:calc(var(--gut)*-1);padding-inline:var(--gut)}
+[data-layout="shelves"] .bento::-webkit-scrollbar{display:none}
+[data-layout="shelves"] .bento>*{flex:0 0 auto;width:176px;scroll-snap-align:start}
+[data-layout="shelves"] .bento .b-hero{width:248px;grid-column:auto;grid-row:auto}
+[data-layout="shelves"] .bento .b-wide{width:248px;grid-column:auto}
+[data-layout="shelves"] .reg{flex-direction:row;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;margin-inline:calc(var(--gut)*-1);padding-inline:var(--gut)}
+[data-layout="shelves"] .reg::-webkit-scrollbar{display:none}
+[data-layout="shelves"] .reg-row{flex:0 0 auto;width:150px;flex-direction:column;align-items:flex-start;
+  gap:6px;scroll-snap-align:start;border-block-end:0;border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:12px;min-height:96px}
+[data-layout="shelves"] .reg-row .fig{margin-inline-start:0;margin-block-start:auto}
+[data-layout="shelves"] .sec{margin-block-start:28px}
+
+/* ── المسار · PATH — the day as a line you are standing on ───────────────────
+   A vertical spine on the start edge with a node per item, and the counter is
+   real: CSS counts the rows, so a row added in JS is numbered without anyone
+   remembering to number it. The one layout that says WHERE YOU ARE rather than
+   WHAT THERE IS, which is why it is the right one for الصلاة.
+   Reversible decision: the spine sits on the start (right) edge rather than
+   centred, because a centred spine halves the usable width of an Arabic line. */
+[data-layout="path"] .stack,[data-layout="path"] .reg{position:relative;counter-reset:node}
+[data-layout="path"] .stack::before,[data-layout="path"] .reg::before{content:"";position:absolute;
+  inset-block:14px;inset-inline-start:11px;width:2px;background:var(--line);border-radius:2px}
+[data-layout="path"] .stack>.card,[data-layout="path"] .reg-row{position:relative;
+  margin-inline-start:38px;counter-increment:node}
+[data-layout="path"] .stack>.card::before,[data-layout="path"] .reg-row::before{
+  content:counter(node);position:absolute;inset-inline-start:-38px;inset-block-start:14px;
+  width:24px;height:24px;border-radius:var(--r-pill);background:var(--card);
+  border:2px solid var(--line);color:var(--soft);
+  font-family:Mono,'IBM Plex Mono',ui-monospace,monospace;font-size:11px;
+  display:grid;place-items:center;font-variant-numeric:tabular-nums}
+/* the node the user is on. `data-now` already exists on .pill, reused here. */
+[data-layout="path"] .reg-row[data-now="1"]::before,[data-layout="path"] .card[data-now="1"]::before{
+  background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+[data-layout="path"] .reg-row{border-block-end:0;padding-block:10px}
+[data-layout="path"] .bento{grid-template-columns:1fr;gap:10px}
+[data-layout="path"] .bento .b-hero,[data-layout="path"] .bento .b-wide{grid-column:span 1;grid-row:span 1}
+
+/* ── الحلقة · RING — one number, then doors ──────────────────────────────────
+   Everything that is not the single figure becomes a door: full width, one
+   line, a chevron, nothing competing. The ring around the figure is drawn with
+   two borders rather than an SVG so it inherits the palette and costs nothing.
+   Best on القضاء — a debt is one number and a small set of ways to act on it.
+   Reversible decision: the chevron points to the START edge (left in RTL is
+   "forward"), matching the rule that forward chevrons point LEFT.            */
+[data-layout="ring"] .n-hero{display:grid;place-items:center;inline-size:164px;block-size:164px;
+  margin-inline:auto;border-radius:var(--r-pill);
+  border:3px solid color-mix(in srgb,currentColor 26%,transparent);
+  box-shadow:inset 0 0 0 11px color-mix(in srgb,currentColor 9%,transparent);
+  font-size:var(--t-3xl)}
+/* A door is flat, full width and has a chevron. It is NOT display:flex — the first
+   version made every card a flex row, which collapsed the internal layout of any
+   card holding more than one block and overlapped its own text. The chevron is
+   positioned instead, so a card's own contents are left alone. */
+[data-layout="ring"] .stack>.card,[data-layout="ring"] .reg-row{border-radius:0;border-inline:0;
+  border-block-start:0;border-block-end:1px solid var(--line);background:transparent;
+  padding-inline:0;min-height:58px;box-shadow:none;position:relative;
+  padding-inline-start:22px}
+[data-layout="ring"] .card-tap::after{content:"";position:absolute;
+  inset-inline-start:2px;inset-block-start:calc(50% - 5px);
+  inline-size:8px;block-size:8px;
+  border-inline-start:2px solid var(--soft);border-block-end:2px solid var(--soft);
+  transform:rotate(45deg);opacity:.65}
+[data-layout="ring"] .reg-row .fig{margin-inline-start:0}
+[data-layout="ring"] .bento{grid-template-columns:1fr;gap:0}
+[data-layout="ring"] .bento .b-hero,[data-layout="ring"] .bento .b-wide{grid-column:span 1;grid-row:span 1}
+[data-layout="ring"] .bento>*{border-radius:0;border-inline:0;border-block-start:0}
+
+/* ── الطبقات · SHEETS — a fixed ground, and the page riding over it ──────────
+   The saturated block stops scrolling away and becomes the ground the content
+   sits ON, which is the one structural idea in the set that reads as depth
+   rather than as arrangement. The grab handle is not decoration: it is the
+   affordance that explains why the surface has an edge.
+   Reversible decision: the head is not `position:sticky` — a sticky head fights
+   the tab bar for the same 44px on a small phone. It stays in flow and the
+   content lifts further over it instead.                                     */
+[data-layout="sheets"] .head{padding-block-end:74px}
+[data-layout="sheets"] .lift{margin-block-start:-58px;background:var(--bg);
+  border-start-start-radius:26px;border-start-end-radius:26px;
+  padding-block-start:8px;padding-block-end:26px;
+  box-shadow:0 -14px 34px -18px var(--grid)}
+[data-layout="sheets"] .lift::before{content:"";display:block;inline-size:38px;block-size:4px;
+  border-radius:2px;background:var(--line);margin:0 auto 16px}
+[data-layout="sheets"] .card{box-shadow:0 2px 10px -6px var(--grid)}
+[data-layout="sheets"] .sec{margin-block-start:24px}
+
+/* ── المنبر · PORTAL — arches, and they have to be real ──────────────────────
+   Previously three rules that rounded two corners, which is a radius, not an
+   arch. An arch is a SHAPE: the springing line is where the curve begins, and
+   above it the sides are vertical. `border-radius: 50% 50% 0 0 / 34% 34% 0 0`
+   gives a true horseshoe rise instead of a rounded rectangle.
+   Muqarnas and the girih rosette are already drawn in ornament.js, so this
+   layout only supplies the structure they hang in. Best on الوصيّة and
+   الاحتضار, where a ceremonial register is the honest one.                   */
+[data-layout="portal"] .head{border-end-start-radius:50%;border-end-end-radius:50%;
+  padding-block-end:52px}
+[data-layout="portal"] .head{border-end-start-radius:50%;border-end-end-radius:50%}
+[data-layout="portal"] .head::after{content:"";position:absolute;inset-block-end:0;inset-inline:0;
+  block-size:34px;background:var(--bg);
+  border-start-start-radius:50% 100%;border-start-end-radius:50% 100%}
+[data-layout="portal"] .card,[data-layout="portal"] .card{
+  border-start-start-radius:46% 26%;border-start-end-radius:46% 26%;
+  border-end-start-radius:var(--r-sm);border-end-end-radius:var(--r-sm);
+  padding-block-start:22px}
+[data-layout="portal"] .bento .b-hero{padding-block-start:28px}
+[data-layout="portal"] .btn{border-start-start-radius:40% 34%;border-start-end-radius:40% 34%}
+[data-layout="portal"] .sec-head{justify-content:center;text-align:center}
+[data-layout="portal"] .n-hero{text-align:center;display:block}
+
+/* ── THE FLOOR EVERY LAYOUT KEEPS ────────────────────────────────────────────
+   A layout may change any arrangement it likes; it may not shrink a target
+   below the tap floor, and it may not introduce a horizontal page scroll. The
+   shelves layout deliberately scrolls its OWN rows sideways — that is a
+   container, not the page — so the rule is written on the page, not on `*`.  */
+[data-layout] .btn,[data-layout] .choice,[data-layout] .icon-btn{min-height:var(--tap)}
+[data-layout] .reg-row{min-height:44px}
+
+</style>
+
+<style>
+/* ── THE REVIEW DESK ─────────────────────────────────────────────────────────
+   Deliberately single-theme. This is an instrument surround, not a document:
+   the twelve layouts are all light designs, and a dark bench is what stops the
+   page's own colour from contaminating a judgement about theirs. Every value is
+   painted explicitly so it holds on either host ground. The palette is the
+   repo's own desk chrome from index.html, not a new invention. */
+:root{
+  --desk:#0E1114; --panel:#161A1E; --panel-2:#1B2126; --edge:#262D33;
+  --txt:#E6EDF2; --mut:#8A959C; --acc:#57D8A2; --warn:#E8B75B;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --kufi:'Noto Kufi Arabic','Noto Sans Arabic',sans-serif;
+  --sans:'IBM Plex Sans Arabic',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--desk);color:var(--txt);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.gx-bar{background:var(--desk);border-bottom:1px solid var(--edge)}
+.gx-stick{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;
+  background:rgba(14,17,20,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--edge)}
+.gx-stick .gx-barin{padding-top:9px;padding-bottom:8px}
+.gx-barin{max-width:1080px;margin-inline:auto;padding:12px 16px 10px}
+.gx-brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.gx-brand h1{font-family:var(--kufi);font-size:19px;font-weight:700;margin:0;letter-spacing:0}
+.gx-brand .gx-sub{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+
+.gx-grp{margin-bottom:9px}
+.gx-grp:last-child{margin-bottom:0}
+.gx-lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--mut);display:block;margin-bottom:6px}
+.gx-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+.gx-chips::-webkit-scrollbar{display:none}
+.gx-chip{flex:0 0 auto;min-height:44px;display:inline-flex;align-items:center;gap:7px;
+  padding:0 13px;border-radius:11px;border:1px solid var(--edge);background:var(--panel);
+  color:var(--txt);font-family:var(--kufi);font-size:14px;font-weight:600;cursor:pointer;
+  transition:border-color .16s,background .16s}
+.gx-chip:hover{border-color:#39434B}
+.gx-chip:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.chip[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#07120D}
+.gx-chip .gx-en{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;opacity:.62;text-transform:uppercase}
+.gx-chip .gx-new{width:6px;height:6px;border-radius:50%;background:var(--warn);flex:none}
+.chip[aria-pressed="true"] .gx-new{background:#07120D}
+.gx-sw{width:17px;height:17px;border-radius:5px;flex:none;border:1px solid rgba(255,255,255,.22)}
+
+.gx-stage{max-width:1080px;margin-inline:auto;padding:18px 16px 56px}
+.gx-why{border:1px solid var(--edge);background:var(--panel);border-radius:14px;padding:14px 16px;
+  margin-bottom:18px}
+.gx-why .gx-ttl{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:7px}
+.gx-why .gx-ttl b{font-family:var(--kufi);font-size:17px;font-weight:700}
+.gx-why .gx-ttl .gx-meta{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.gx-why p{margin:0 0 5px;font-size:14.5px;line-height:1.75;direction:rtl;text-align:right;max-width:66ch}
+.gx-why p.note{color:var(--mut);font-size:13px;margin-bottom:0}
+.gx-flag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--warn)}
+.gx-flag i{width:6px;height:6px;border-radius:50%;background:var(--warn);display:block}
+
+/* one phone, full-bleed on a phone, framed on a desk — reviewed at 390 either way */
+.gx-wrapp{display:flex;justify-content:center}
+.phone{--col:100%;width:min(390px,100%);height:748px;position:relative;overflow:hidden;border-radius:26px;
+  border:1px solid var(--edge)}
+.phone .view-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;background:var(--bg)}
+.phone .app{padding-bottom:84px}
+@media (min-width:760px){ .phone{border-radius:38px;box-shadow:0 0 0 9px #1B2025,0 24px 64px rgba(0,0,0,.55)} }
+
+/* the contact sheet: all twelve at a glance, because a switcher alone never
+   answers "which of these is even in the running" */
+.gx-sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:14px}
+.gx-mini{border:1px solid var(--edge);border-radius:13px;overflow:hidden;background:var(--panel);
+  cursor:pointer;padding:0;text-align:inherit;font:inherit;color:inherit;display:block}
+.gx-mini:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.mini[aria-pressed="true"]{border-color:var(--acc)}
+.gx-mini .gx-win{height:236px;overflow:hidden;position:relative;background:#fff}
+.gx-mini .gx-win .phone{--col:100%;transform:scale(.3795);transform-origin:top left;width:390px;height:622px;
+  border:0;border-radius:0;position:absolute;top:0;left:0;pointer-events:none}
+.gx-mini .gx-cap{display:flex;align-items:center;gap:7px;padding:9px 11px;border-top:1px solid var(--edge);
+  min-height:44px}
+.gx-mini .gx-cap b{font-family:var(--kufi);font-size:13.5px;font-weight:600}
+.gx-mini .gx-cap .gx-en{font-family:var(--mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--mut);margin-inline-start:auto}
+.gx-foot{max-width:1080px;margin:0 auto;padding:0 16px 40px;color:var(--mut);font-size:12.5px;line-height:1.8}
+.gx-foot code{font-family:var(--mono);font-size:11.5px;color:var(--txt)}
+</style>
+
+<header class="gx-bar">
+  <div class="gx-barin">
+    <div class="gx-brand">
+      <h1>عَوْدة — اثنا عشر تخطيطاً</h1>
+      <span class="gx-sub">build 8 · layouts axis · 390px</span>
+    </div>
+    <div class="gx-grp"><span class="gx-lab">اللون · palette — hold this constant while you compare</span><div class="gx-chips" id="cp"></div></div>
+    <div class="gx-grp"><span class="gx-lab">الشاشة · screen</span><div class="gx-chips" id="cs"></div></div>
+  </div>
+</header>
+
+<!-- Only this row follows you. The full bar was 308px tall on a 390px phone, which
+     is a third of the screen given to controls; palette and screen are set once and
+     the layout row is the one you tap over and over. -->
+<div class="gx-stick">
+  <div class="gx-barin">
+    <span class="gx-lab">التخطيط · layout (structure)</span><div class="gx-chips" id="cl"></div>
+  </div>
+</div>
+
+<main class="gx-stage">
+  <section class="gx-why" id="why"></section>
+  <div class="gx-wrapp" id="stage"></div>
+</main>
+
+<section class="gx-stage" style="padding-top:0">
+  <span class="gx-lab" style="margin-bottom:10px">الكلّ · all twelve, same screen, same palette</span>
+  <div class="gx-sheet" id="sheet"></div>
+</section>
+
+<footer class="gx-foot">
+  <p><b>التخطيط ليس النمط.</b> المخطوط والطبقات والمنبر والخط والحادّ أسماء <em>تخطيطات</em> هنا — بنية على لوحة ألوان واحدة. المخطوط والطبقات اسمان لـ<em>أنماط</em> أيضاً في المعرض الآخر، والنمط اتّجاه بصريّ كامل. الاسم مشترك والمعنى مختلف.</p>
+  <p style="margin-top:10px">Six layouts carried <code>0</code> CSS rules before today — <code>cards · shelves · path · ring · sheets</code>, plus <code>portal</code>, which had three rules that rounded corners without restructuring anything. They are marked <span class="gx-flag"><i></i>built today</span>. The other six are unchanged from build 8.</p>
+</footer>
+
+<script>
+const D = {"screens":{"home":{"ar":"الرئيسيّة","view":"\n  \n  <header class=\"head\" style=\"\">\n    <svg class=\"orn orn-kufic\" aria-hidden=\"true\" focusable=\"false\" preserveAspectRatio=\"xMidYMid slice\">\n    <defs><pattern id=\"kf-aq844\" width=\"52\" height=\"52\" patternUnits=\"userSpaceOnUse\">\n    <path d=\"M0 26H13V13H26V0M26 52V39H39V26H52M13 52V39M39 0V13M0 39H13M39 26H52\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" opacity=\"0.045\"></path>\n  </pattern></defs>\n    <rect width=\"100%\" height=\"100%\" fill=\"url(#kf-aq844)\"></rect></svg>\n    <div class=\"head-orn\" data-rotate=\"\"><svg viewBox=\"0 0 420 420\" width=\"420\" height=\"420\" aria-hidden=\"true\" focusable=\"false\" class=\"orn orn-rosette\"><circle cx=\"210\" cy=\"210\" r=\"193.2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" opacity=\".55\"></circle><path d=\"M210 16.8L306.6 377.32L42.68 113.4L403.2 210L42.68 306.6L306.6 42.68L210 403.2L113.4 42.68L377.32 306.6L16.8 210L377.32 113.4L113.4 377.32Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linejoin=\"miter\" opacity=\".95\"></path><path d=\"M210 43.85L376.15 210L210 376.15L43.85 210ZM293.08 66.11L353.89 293.08L126.92 353.89L66.11 126.92ZM353.89 126.92L293.08 353.89L66.11 293.08L126.92 66.11Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" opacity=\".5\"></path><path d=\"M210 165.37L189 131.62L210 90.22L231 131.62ZM232.31 171.35L231 131.62L269.89 106.26L267.38 152.62ZM248.65 187.69L267.38 152.62L313.74 150.11L288.38 189ZM254.63 210L288.38 189L329.78 210L288.38 231ZM248.65 232.31L288.38 231L313.74 269.89L267.38 267.38ZM232.31 248.65L267.38 267.38L269.89 313.74L231 288.38ZM210 254.63L231 288.38L210 329.78L189 288.38ZM187.69 248.65L189 288.38L150.11 313.74L152.62 267.38ZM171.35 232.31L152.62 267.38L106.26 269.89L131.62 231ZM165.37 210L131.62 231L90.22 210L131.62 189ZM171.35 187.69L131.62 189L106.26 150.11L152.62 152.62ZM187.69 171.35L152.62 152.62L150.11 106.26L189 131.62Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" opacity=\".42\"></path><path d=\"M210 128.86L250.57 139.73L280.27 169.43L291.14 210L280.27 250.57L250.57 280.27L210 291.14L169.43 280.27L139.73 250.57L128.86 210L139.73 169.43L169.43 139.73Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" opacity=\".8\"></path><path d=\"M210 128.86L210 16.8M250.57 139.73L306.6 42.68M280.27 169.43L377.32 113.4M291.14 210L403.2 210M280.27 250.57L377.32 306.6M250.57 280.27L306.6 377.32M210 291.14L210 403.2M169.43 280.27L113.4 377.32M139.73 250.57L42.68 306.6M128.86 210L16.8 210M139.73 169.43L42.68 113.4M169.43 139.73L113.4 42.68\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" opacity=\".22\"></path></svg></div>\n    <div class=\"head-row\">\n      \n      <div class=\"grow\">\n        <span class=\"kicker-ar\">٥ ربيع الآخر ١٤٤٨</span>\n        <h1 class=\"h1\" style=\"color:var(--head-ink);margin-top:2px\">مساء الخير، هادي</h1>\n        \n      </div>\n      <button class=\"icon-btn\" data-go=\"#/account\" aria-label=\"حسابي\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><circle cx=\"12\" cy=\"8.4\" r=\"3.6\"></circle><path d=\"M4.8 20.4a7.2 7.2 0 0 1 14.4 0\"></path></svg></button>\n              <button class=\"icon-btn\" data-styles=\"\" aria-label=\"الأنماط\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12 3.4a8.6 8.6 0 1 0 0 17.2c1.3 0 2-.8 2-1.8 0-1.6-1.4-1.8-1.4-3 0-1 .9-1.8 2-1.8h1.6a4.4 4.4 0 0 0 4.4-4.4c0-3.4-3.9-6.2-8.6-6.2Z\"></path><circle cx=\"8.4\" cy=\"10.4\" r=\"1.1\" fill=\"currentColor\" stroke=\"none\"></circle><circle cx=\"12\" cy=\"7.8\" r=\"1.1\" fill=\"currentColor\" stroke=\"none\"></circle><circle cx=\"15.6\" cy=\"10\" r=\"1.1\" fill=\"currentColor\" stroke=\"none\"></circle></svg></button>\n    </div>\n    <div class=\"row\" style=\"position:relative;margin-top:20px;gap:16px;align-items:center\">\n        <div style=\"width:96px;height:96px;flex:none;color:var(--head-ink)\">\n          <svg viewBox=\"0 0 96 96\" width=\"96\" height=\"96\" aria-hidden=\"true\" focusable=\"false\" class=\"orn orn-astro\">\n    <path d=\"M13.08 68.16A40.32 40.32 0 1 1 82.92 68.16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" opacity=\".34\"></path>\n    <path d=\"M17.65 65.52L13.08 68.16M12.64 60.87L10.11 61.79M10.94 54.53L8.29 55M10.37 48L7.68 48M10.94 41.47L8.29 41M12.64 35.13L10.11 34.21M17.65 30.48L13.08 27.84M19.17 23.81L17.11 22.08M23.81 19.17L22.08 17.11M29.18 15.41L27.84 13.08M35.13 12.64L34.21 10.11M41.47 10.94L41 8.29M48 12.96L48 7.68M54.53 10.94L55 8.29M60.87 12.64L61.79 10.11M66.82 15.41L68.16 13.08M72.19 19.17L73.92 17.11M76.83 23.81L78.89 22.08M78.35 30.48L82.92 27.84M83.36 35.13L85.89 34.21M85.06 41.47L87.71 41M85.63 48L88.32 48M85.06 54.53L87.71 55M83.36 60.87L85.89 61.79M78.35 65.52L82.92 68.16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.54\" opacity=\".46\"></path>\n    <path class=\"arc-draw\" d=\"M13.08 68.16A40.32 40.32 0 0 1 67.42 12.67\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.74\" stroke-linecap=\"round\" style=\"stroke-dasharray: 104.704; stroke-dashoffset: 104.704;\"></path>\n    \n  </svg></div>\n        <div class=\"grow\">\n          <span class=\"kicker-ar\">الصلاة التالية</span>\n          <div class=\"n-lg\" style=\"color:var(--head-ink);margin-top:2px\">العصر</div>\n          <span class=\"kicker-ar\" style=\"margin-top:4px\">بعد ١ س ١٤ د · ١٥:٣١</span>\n        </div></div>\n  </header>\n  <div class=\"wrap lift stack\">\n    <div class=\"card \"><div class=\"between\" style=\"margin-bottom:14px\">\n        <span class=\"kicker-ar\">صلوات اليوم</span>\n        <span class=\"tag\">بقيت ٣</span></div>\n      <div class=\"pills\">\n  <button class=\"pill\" data-p=\"0\" aria-pressed=\"true\">\n    <span class=\"pill-check\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-sm\"><path d=\"M4.8 12.6 9.6 17.4 19.2 6.6\"></path></svg></span>\n    <span>الصبح</span><span class=\"t\">04:42</span></button>\n  <button class=\"pill\" data-p=\"1\" aria-pressed=\"true\">\n    <span class=\"pill-check\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-sm\"><path d=\"M4.8 12.6 9.6 17.4 19.2 6.6\"></path></svg></span>\n    <span>الظهر</span><span class=\"t\">12:08</span></button>\n  <button class=\"pill\" data-p=\"2\" aria-pressed=\"false\" data-now=\"1\">\n    <span class=\"pill-check\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-sm\"><path d=\"M4.8 12.6 9.6 17.4 19.2 6.6\"></path></svg></span>\n    <span>العصر</span><span class=\"t\">15:31</span></button>\n  <button class=\"pill\" data-p=\"3\" aria-pressed=\"false\">\n    <span class=\"pill-check\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-sm\"><path d=\"M4.8 12.6 9.6 17.4 19.2 6.6\"></path></svg></span>\n    <span>المغرب</span><span class=\"t\">18:24</span></button>\n  <button class=\"pill\" data-p=\"4\" aria-pressed=\"false\">\n    <span class=\"pill-check\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-sm\"><path d=\"M4.8 12.6 9.6 17.4 19.2 6.6\"></path></svg></span>\n    <span>العشاء</span><span class=\"t\">19:46</span></button></div>\n      <p class=\"hint\" style=\"margin-top:12px\">اضغط لتسجيل ما صلّيت. لا شيء هنا يتحوّل إلى اللون الأحمر، ولا يُحسب تتابع.</p></div>\n\n    <div class=\"bento\" style=\"margin-top:12px\">\n      <div class=\"card card-glint b-hero card-tap\" data-glint=\"\"><svg class=\"orn orn-facet\" id=\"fc0v7su\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" aria-hidden=\"true\" focusable=\"false\" fill=\"currentColor\"><polygon points=\"0,0 5.88,0 2.94,100\" opacity=\"0.004\"></polygon><polygon points=\"2.94,0 5.88,100 0,100\" opacity=\"0.005\"></polygon><polygon points=\"5.88,0 11.76,0 8.82,100\" opacity=\"0.008\"></polygon><polygon points=\"8.82,0 11.76,100 5.88,100\" opacity=\"0.008\"></polygon><polygon points=\"11.76,0 17.65,0 14.71,100\" opacity=\"0.012\"></polygon><polygon points=\"14.71,0 17.65,100 11.76,100\" opacity=\"0.002\"></polygon><polygon points=\"17.65,0 23.53,0 20.59,100\" opacity=\"0.004\"></polygon><polygon points=\"20.59,0 23.53,100 17.65,100\" opacity=\"0.005\"></polygon><polygon points=\"23.53,0 29.41,0 26.47,100\" opacity=\"0.008\"></polygon><polygon points=\"26.47,0 29.41,100 23.53,100\" opacity=\"0.008\"></polygon><polygon points=\"29.41,0 35.29,0 32.35,100\" opacity=\"0.012\"></polygon><polygon points=\"32.35,0 35.29,100 29.41,100\" opacity=\"0.002\"></polygon><polygon points=\"35.29,0 41.18,0 38.24,100\" opacity=\"0.004\"></polygon><polygon points=\"38.24,0 41.18,100 35.29,100\" opacity=\"0.005\"></polygon><polygon points=\"41.18,0 47.06,0 44.12,100\" opacity=\"0.008\"></polygon><polygon points=\"44.12,0 47.06,100 41.18,100\" opacity=\"0.008\"></polygon><polygon points=\"47.06,0 52.94,0 50,100\" opacity=\"0.012\"></polygon><polygon points=\"50,0 52.94,100 47.06,100\" opacity=\"0.002\"></polygon><polygon points=\"52.94,0 58.82,0 55.88,100\" opacity=\"0.004\"></polygon><polygon points=\"55.88,0 58.82,100 52.94,100\" opacity=\"0.005\"></polygon><polygon points=\"58.82,0 64.71,0 61.76,100\" opacity=\"0.008\"></polygon><polygon points=\"61.76,0 64.71,100 58.82,100\" opacity=\"0.008\"></polygon><polygon points=\"64.71,0 70.59,0 67.65,100\" opacity=\"0.012\"></polygon><polygon points=\"67.65,0 70.59,100 64.71,100\" opacity=\"0.002\"></polygon><polygon points=\"70.59,0 76.47,0 73.53,100\" opacity=\"0.004\"></polygon><polygon points=\"73.53,0 76.47,100 70.59,100\" opacity=\"0.005\"></polygon><polygon points=\"76.47,0 82.35,0 79.41,100\" opacity=\"0.008\"></polygon><polygon points=\"79.41,0 82.35,100 76.47,100\" opacity=\"0.008\"></polygon><polygon points=\"82.35,0 88.24,0 85.29,100\" opacity=\"0.012\"></polygon><polygon points=\"85.29,0 88.24,100 82.35,100\" opacity=\"0.002\"></polygon><polygon points=\"88.24,0 94.12,0 91.18,100\" opacity=\"0.004\"></polygon><polygon points=\"91.18,0 94.12,100 88.24,100\" opacity=\"0.005\"></polygon><polygon points=\"94.12,0 100,0 97.06,100\" opacity=\"0.008\"></polygon><polygon points=\"97.06,0 100,100 94.12,100\" opacity=\"0.008\"></polygon></svg><div style=\"position:relative\"><div class=\"cell\" style=\"height:100%\">\n        <div><span class=\"kicker-ar\">الباقي من القضاء</span>\n          <div class=\"n-hero\" id=\"owed\" style=\"margin-top:8px;color:var(--acc);font-size:52px\">١١٬٢٧٠</div>\n          <span class=\"kicker-ar\" style=\"margin-top:6px\">صلاة</span></div>\n        <div>\n          <div class=\"bar\"><i style=\"width:10%\"></i></div>\n          <p class=\"hint\" style=\"margin-top:8px\">قضيتَ ١٢ صلاة هذا الأسبوع — الرقم ينزل، ولا يصعد.</p>\n        </div></div></div></div>\n\n      <div class=\"card card-tap cell\" data-go=\"#/will\">\n        <div style=\"color:var(--acc)\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-lg\"><path d=\"M6 3.2h8.4L18 6.8V17a3.8 3.8 0 0 1-3.8 3.8H6Z\"></path><path d=\"M14.4 3.2v3.6H18\" opacity=\".6\"></path><circle cx=\"12\" cy=\"14.2\" r=\"2.2\" opacity=\".6\"></circle><path d=\"M12 16.4v3\" opacity=\".45\"></path></svg></div>\n        <div><b class=\"h3\">الوصيّة</b>\n          <p class=\"hint\">٣ من ٧ أقسام</p></div>\n        <div class=\"bar\"><i style=\"width:43%\"></i></div>\n      </div>\n\n      <div class=\"card card-tap cell\" data-go=\"#/knowledge\">\n        <div style=\"color:var(--acc)\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-lg\"><path d=\"M12 6.4c-1.9-1.5-4-2.1-6.6-2.1v13c2.6 0 4.7.6 6.6 2.1 1.9-1.5 4-2.1 6.6-2.1v-13c-2.6 0-4.7.6-6.6 2.1Z\"></path><path d=\"M12 6.4v13\" opacity=\".45\"></path></svg></div>\n        <div><b class=\"h3\">المعرفة</b><p class=\"hint\">٤ صفحات جديدة</p></div>\n        <span class=\"tag tag-acc\">لم تُقرأ</span>\n      </div>\n\n      <div class=\"card b-wide\" data-go=\"#/qada\">\n        <div class=\"between\"><div>\n          <span class=\"kicker-ar\">على وتيرتك الحاليّة</span>\n          <p class=\"h3\" style=\"margin-top:4px\">١٣ ذو القعدة ١٤٥٨</p>\n          <p class=\"hint\">٣ صلوات في اليوم · نحو ١٠.٦ سنة</p>\n        </div><span style=\"color:var(--soft)\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M14.4 6 8.4 12l6 6\"></path></svg></span></div>\n      </div>\n    </div>\n\n    <div class=\"sec\">\n      \n  <div class=\"sec-head\"><h2 class=\"h2\">هذا الأسبوع وما قبله</h2><span class=\"kicker-ar\">٤٩ يوماً</span></div>\n  <div class=\"rule\" data-extend=\"\"></div>\n      <div class=\"card \"><div class=\"dotgrid\"><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"p\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"0\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"p\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"0\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"p\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"0\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"p\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"0\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"p\"></i><i class=\"dot\" data-v=\"0\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"1\"></i><i class=\"dot\" data-v=\"x\"></i><i class=\"dot\" data-v=\"x\"></i><i class=\"dot\" data-v=\"x\"></i><i class=\"dot\" data-v=\"x\"></i></div>\n        <div class=\"row\" style=\"margin-top:14px;gap:16px;flex-wrap:wrap\">\n          <span class=\"row\" style=\"gap:6px\"><i class=\"dot\" data-v=\"1\" style=\"width:11px\"></i><span class=\"hint\">كاملة</span></span>\n          <span class=\"row\" style=\"gap:6px\"><i class=\"dot\" data-v=\"p\" style=\"width:11px\"></i><span class=\"hint\">بعضها</span></span>\n          <span class=\"row\" style=\"gap:6px\"><i class=\"dot\" data-v=\"0\" style=\"width:11px\"></i><span class=\"hint\">لا شيء</span></span>\n          <span class=\"row\" style=\"gap:6px\"><i class=\"dot\" data-v=\"x\" style=\"width:11px\"></i><span class=\"hint\">قادم</span></span>\n        </div>\n        <p class=\"hint\" style=\"margin-top:12px\">نقطة لكلّ يوم، بلا مجموع وبلا تقييم. النمط يُرى، ولا يُحاسَب عليه أحد.</p></div>\n    </div>\n\n    <div class=\"sec\">\n      \n  <div class=\"sec-head\"><h2 class=\"h2\">جديد في المعرفة</h2><button class=\"btn btn-sm btn-quiet\" data-go=\"#/knowledge\">الكلّ</button></div>\n  <div class=\"rule\" data-extend=\"\"></div>\n      <div class=\"shelf\">\n        <div class=\"card card-tap\" data-go=\"#/knowledge\" style=\"height:170px;display:flex;flex-direction:column;justify-content:space-between\">\n            <span style=\"color:var(--acc)\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M6 3.4h7.6L18.6 8.4V20.6H6Z\"></path><path d=\"M13.6 3.4v5h5\" opacity=\".6\"></path><path d=\"M9 12.6h6M9 16h4\" opacity=\".7\"></path></svg></span>\n            <div><b style=\"font-family:Kufi;font-size:15px;line-height:1.4;display:block\">ما الفرق بين القضاء والأداء؟</b>\n            <span class=\"hint\" style=\"font-size:12px\">القضاء والفوائت</span></div></div><div class=\"card card-tap\" data-go=\"#/knowledge\" style=\"height:170px;display:flex;flex-direction:column;justify-content:space-between\">\n            <span style=\"color:var(--acc)\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M6 3.4h7.6L18.6 8.4V20.6H6Z\"></path><path d=\"M13.6 3.4v5h5\" opacity=\".6\"></path><path d=\"M9 12.6h6M9 16h4\" opacity=\".7\"></path></svg></span>\n            <div><b style=\"font-family:Kufi;font-size:15px;line-height:1.4;display:block\">كيف تُحسب سنة التكليف؟</b>\n            <span class=\"hint\" style=\"font-size:12px\">أساسيات الصلاة</span></div></div><div class=\"card card-tap\" data-go=\"#/knowledge\" style=\"height:170px;display:flex;flex-direction:column;justify-content:space-between\">\n            <span style=\"color:var(--acc)\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M6 3.4h7.6L18.6 8.4V20.6H6Z\"></path><path d=\"M13.6 3.4v5h5\" opacity=\".6\"></path><path d=\"M9 12.6h6M9 16h4\" opacity=\".7\"></path></svg></span>\n            <div><b style=\"font-family:Kufi;font-size:15px;line-height:1.4;display:block\">الوصيّة الواجبة والمستحبّة</b>\n            <span class=\"hint\" style=\"font-size:12px\">الوصيّة والميراث</span></div></div><div class=\"card card-tap\" data-go=\"#/knowledge\" style=\"height:170px;display:flex;flex-direction:column;justify-content:space-between\">\n            <span style=\"color:var(--acc)\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M6 3.4h7.6L18.6 8.4V20.6H6Z\"></path><path d=\"M13.6 3.4v5h5\" opacity=\".6\"></path><path d=\"M9 12.6h6M9 16h4\" opacity=\".7\"></path></svg></span>\n            <div><b style=\"font-family:Kufi;font-size:15px;line-height:1.4;display:block\">تلقين المحتضر</b>\n            <span class=\"hint\" style=\"font-size:12px\">الموت وما بعده</span></div></div>\n      </div>\n    </div>\n    <div style=\"height:20px\"></div>\n  </div>","tabs":"\n    <button class=\"tab\" data-tab=\"#/home\" aria-current=\"page\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12.00 3.40L16.30 4.55L19.45 7.70L20.60 12.00L19.45 16.30L16.30 19.45L12.00 20.60L7.70 19.45L4.55 16.30L3.40 12.00L4.55 7.70L7.70 4.55Z\"></path><path d=\"M12 8.2v7.6M8.2 12h7.6\" opacity=\".45\"></path></svg><span>الرئيسيّة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/prayers\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M6 21v-9.2C6 8 8.7 5.2 12 5.2S18 8 18 11.8V21\"></path><path d=\"M4 21h16\"></path><path d=\"M12 5.2V3.2\"></path><path d=\"M9.6 21v-8.6a2.4 2.4 0 0 1 4.8 0V21\" opacity=\".45\"></path></svg><span>الصلاة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/knowledge\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12 6.4c-1.9-1.5-4-2.1-6.6-2.1v13c2.6 0 4.7.6 6.6 2.1 1.9-1.5 4-2.1 6.6-2.1v-13c-2.6 0-4.7.6-6.6 2.1Z\"></path><path d=\"M12 6.4v13\" opacity=\".45\"></path></svg><span>المعرفة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/will\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M6 3.2h8.4L18 6.8V17a3.8 3.8 0 0 1-3.8 3.8H6Z\"></path><path d=\"M14.4 3.2v3.6H18\" opacity=\".6\"></path><circle cx=\"12\" cy=\"14.2\" r=\"2.2\" opacity=\".6\"></circle><path d=\"M12 16.4v3\" opacity=\".45\"></path></svg><span>الوصيّة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/ihtidar\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12 21V6\"></path><path d=\"M12 9.2c0-2 1.6-3.6 4.2-4 .3 2.6-1.2 4.6-4.2 4.8Z\"></path><path d=\"M12 14c0-2-1.6-3.6-4.2-4-.3 2.6 1.2 4.6 4.2 4.8Z\" opacity=\".7\"></path></svg><span>الاحتضار</span><span class=\"tab-dot\"></span></button>","ground":""},"qada":{"ar":"القضاء","view":"\n  \n  <header class=\"head\" style=\"\">\n    <svg class=\"orn orn-kufic\" aria-hidden=\"true\" focusable=\"false\" preserveAspectRatio=\"xMidYMid slice\">\n    <defs><pattern id=\"kf-cj0j2\" width=\"52\" height=\"52\" patternUnits=\"userSpaceOnUse\">\n    <path d=\"M0 26H13V13H26V0M26 52V39H39V26H52M13 52V39M39 0V13M0 39H13M39 26H52\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" opacity=\"0.045\"></path>\n  </pattern></defs>\n    <rect width=\"100%\" height=\"100%\" fill=\"url(#kf-cj0j2)\"></rect></svg>\n    <div class=\"head-orn\" data-rotate=\"\"><svg viewBox=\"0 0 420 420\" width=\"420\" height=\"420\" aria-hidden=\"true\" focusable=\"false\" class=\"orn orn-rosette\"><circle cx=\"210\" cy=\"210\" r=\"193.2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" opacity=\".55\"></circle><path d=\"M210 16.8L306.6 377.32L42.68 113.4L403.2 210L42.68 306.6L306.6 42.68L210 403.2L113.4 42.68L377.32 306.6L16.8 210L377.32 113.4L113.4 377.32Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linejoin=\"miter\" opacity=\".95\"></path><path d=\"M210 43.85L376.15 210L210 376.15L43.85 210ZM293.08 66.11L353.89 293.08L126.92 353.89L66.11 126.92ZM353.89 126.92L293.08 353.89L66.11 293.08L126.92 66.11Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" opacity=\".5\"></path><path d=\"M210 165.37L189 131.62L210 90.22L231 131.62ZM232.31 171.35L231 131.62L269.89 106.26L267.38 152.62ZM248.65 187.69L267.38 152.62L313.74 150.11L288.38 189ZM254.63 210L288.38 189L329.78 210L288.38 231ZM248.65 232.31L288.38 231L313.74 269.89L267.38 267.38ZM232.31 248.65L267.38 267.38L269.89 313.74L231 288.38ZM210 254.63L231 288.38L210 329.78L189 288.38ZM187.69 248.65L189 288.38L150.11 313.74L152.62 267.38ZM171.35 232.31L152.62 267.38L106.26 269.89L131.62 231ZM165.37 210L131.62 231L90.22 210L131.62 189ZM171.35 187.69L131.62 189L106.26 150.11L152.62 152.62ZM187.69 171.35L152.62 152.62L150.11 106.26L189 131.62Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" opacity=\".42\"></path><path d=\"M210 128.86L250.57 139.73L280.27 169.43L291.14 210L280.27 250.57L250.57 280.27L210 291.14L169.43 280.27L139.73 250.57L128.86 210L139.73 169.43L169.43 139.73Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" opacity=\".8\"></path><path d=\"M210 128.86L210 16.8M250.57 139.73L306.6 42.68M280.27 169.43L377.32 113.4M291.14 210L403.2 210M280.27 250.57L377.32 306.6M250.57 280.27L306.6 377.32M210 291.14L210 403.2M169.43 280.27L113.4 377.32M139.73 250.57L42.68 306.6M128.86 210L16.8 210M139.73 169.43L42.68 113.4M169.43 139.73L113.4 42.68\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" opacity=\".22\"></path></svg></div>\n    <div class=\"head-row\">\n      <button class=\"icon-btn\" data-back=\"\" aria-label=\"رجوع\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M9.6 6l6 6-6 6\"></path></svg></button>\n      <div class=\"grow\">\n        <span class=\"kicker-ar\">القضاء</span>\n        \n        \n      </div>\n      <button class=\"icon-btn\" data-edit=\"\" aria-label=\"تعديل الحساب\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><circle cx=\"12\" cy=\"12\" r=\"3.1\"></circle><path d=\"M19.5 12a7.5 7.5 0 0 0-.12-1.32l2.02-1.5-1.9-3.29-2.36.92a7.5 7.5 0 0 0-2.3-1.33L14.5 2.9h-3.8l-.34 2.58a7.5 7.5 0 0 0-2.3 1.33l-2.36-.92-1.9 3.29 2.02 1.5a7.5 7.5 0 0 0 0 2.64l-2.02 1.5 1.9 3.29 2.36-.92a7.5 7.5 0 0 0 2.3 1.33l.34 2.58h3.8l.34-2.58a7.5 7.5 0 0 0 2.3-1.33l2.36.92 1.9-3.29-2.02-1.5c.08-.43.12-.87.12-1.32Z\"></path></svg></button>\n    </div>\n    <div style=\"position:relative;text-align:center;padding-block:14px 4px\">\n      <span class=\"kicker-ar\">الباقي</span>\n      <div class=\"n-hero\" id=\"q\" style=\"color:var(--head-ink);margin-top:8px\">٨٬٩٧٩</div>\n      <span class=\"kicker-ar\" style=\"margin-top:8px\">صلاة · من ١٢٬٥٠٠</span>\n      <div style=\"max-width:250px;margin:16px auto 0\"><div class=\"bar\" style=\"background:color-mix(in srgb,var(--head-ink) 22%,transparent)\">\n        <i style=\"width:10%;background:var(--head-ink)\"></i></div></div>\n      <p class=\"kicker-ar\" style=\"margin-top:10px\">قضيتَ ١٬٢٣٠ حتّى الآن</p>\n    </div>\n  </header>\n  <div class=\"wrap lift stack\">\n    <div class=\"card \"><div class=\"between\"><div><span class=\"kicker-ar\">وتيرتك</span>\n        <p class=\"h2\" style=\"margin-top:4px\"><span class=\"n\">٣</span> في اليوم</p></div>\n      <button class=\"btn btn-sm btn-quiet\" data-pace=\"\">تعديل</button></div>\n      <div class=\"rule\" style=\"margin-block:14px\"></div>\n      <div class=\"between\"><span class=\"hint\">تنتهي في</span><span class=\"n-md\">١٣ ذو القعدة ١٤٥٨</span></div>\n      <div class=\"between\" style=\"margin-top:8px\"><span class=\"hint\">هذا الأسبوع</span>\n        <span class=\"hint n\">١٢ من ٢١ — ضمن المدى</span></div>\n      <p class=\"hint\" style=\"margin-top:12px\">«ضمن المدى» لا «ناجح». الوتيرة هدفٌ تقريبيّ لا امتحان، والأسبوع الذي ينزل قليلاً أسبوعٌ عاديّ.</p></div>\n\n    <div class=\"sec\">\n      \n  <div class=\"sec-head\"><h2 class=\"h2\">السجلّ</h2><span class=\"kicker-ar\">بحسب الصلاة</span></div>\n  <div class=\"rule\" data-extend=\"\"></div>\n      <div class=\"card card-flush\"><div class=\"reg\">\n  <button class=\"reg-row\">\n    \n    <span class=\"grow\"><span style=\"display:block\">الصبح</span><span class=\"hint\">يوماً</span></span>\n    <span class=\"fig n\">٢٬٢٥٤</span>\n    <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-sm\"><path d=\"M14.4 6 8.4 12l6 6\"></path></svg>\n  </button>\n  <button class=\"reg-row\">\n    \n    <span class=\"grow\"><span style=\"display:block\">الظهر</span><span class=\"hint\">يوماً</span></span>\n    <span class=\"fig n\">٢٬٢٥٤</span>\n    <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-sm\"><path d=\"M14.4 6 8.4 12l6 6\"></path></svg>\n  </button>\n  <button class=\"reg-row\">\n    \n    <span class=\"grow\"><span style=\"display:block\">العصر</span><span class=\"hint\">يوماً</span></span>\n    <span class=\"fig n\">٢٬٢٥٤</span>\n    <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-sm\"><path d=\"M14.4 6 8.4 12l6 6\"></path></svg>\n  </button>\n  <button class=\"reg-row\">\n    \n    <span class=\"grow\"><span style=\"display:block\">المغرب</span><span class=\"hint\">يوماً</span></span>\n    <span class=\"fig n\">٢٬٢٥٤</span>\n    <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-sm\"><path d=\"M14.4 6 8.4 12l6 6\"></path></svg>\n  </button>\n  <button class=\"reg-row\">\n    \n    <span class=\"grow\"><span style=\"display:block\">العشاء</span><span class=\"hint\">يوماً</span></span>\n    <span class=\"fig n\">٢٬٢٥٤</span>\n    <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic ic-sm\"><path d=\"M14.4 6 8.4 12l6 6\"></path></svg>\n  </button></div></div>\n    </div>\n\n    <div class=\"sec\">\n      \n  <div class=\"sec-head\"><h2 class=\"h2\">الحساب</h2></div>\n  <div class=\"rule\" data-extend=\"\"></div>\n      <div class=\"card card-flush\"><div class=\"reg\">\n        \n  <div class=\"reg-row\" data-static=\"\">\n    \n    <span class=\"grow\"><span style=\"display:block\">سنّ التكليف</span><span class=\"hint\">قمريّة — في الشيفرة، لا في المحتوى</span></span>\n    <span class=\"fig n\">١٥ سنة</span>\n    \n  </div>\n        \n  <div class=\"reg-row\" data-static=\"\">\n    \n    <span class=\"grow\"><span style=\"display:block\">من تاريخ</span><span class=\"hint\">يوم بلوغك التكليف</span></span>\n    <span class=\"fig n\">١٢ ربيع الأوّل ١٤٢٩</span>\n    \n  </div>\n        \n  <div class=\"reg-row\" data-static=\"\">\n    \n    <span class=\"grow\"><span style=\"display:block\">الأيّام الباقية</span></span>\n    <span class=\"fig n\">٢٬٢٥٤</span>\n    \n  </div>\n        \n  <div class=\"reg-row\" data-static=\"\">\n    \n    <span class=\"grow\"><span style=\"display:block\">المجموع</span><span class=\"hint\">٢٬٢٥٤ × ٥</span></span>\n    <span class=\"fig n\">١١٬٢٧٠</span>\n    \n  </div>\n      </div>\n      <p class=\"hint\" style=\"margin-top:14px\">كلّ سطر هنا مبنيّ على شيء أدخلتَه أنت، ويمكنك تغييره فيُعاد الحساب فوراً. هذا تقدير، وليس حُكماً.</p></div>\n    </div>\n\n    <div class=\"card \"><div class=\"row\" style=\"align-items:flex-start;gap:14px\">\n      <span style=\"color:var(--acc);flex:none\"><svg viewBox=\"0 0 46 46\" width=\"46\" height=\"46\" aria-hidden=\"true\" focusable=\"false\" class=\"orn orn-turbah\">\n    <circle cx=\"23\" cy=\"23\" r=\"19.32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"></circle>\n    <circle cx=\"23\" cy=\"23\" r=\"15.18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" opacity=\".55\"></circle>\n    <path d=\"M32.35 26.87L26.87 32.35L19.13 32.35L13.65 26.87L13.65 19.13L19.13 13.65L26.87 13.65L32.35 19.13Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" opacity=\".8\"></path>\n    <circle cx=\"23\" cy=\"23\" r=\"2.76\" fill=\"currentColor\" opacity=\".5\"></circle>\n  </svg></span>\n      <div><b class=\"label\">لماذا التربة علامةُ هذه الشاشة</b>\n      <p class=\"hint\" style=\"margin-top:4px\">لأنّها ما تُوضع تحت الجبهة في كلّ سجدة — أكثر شيءٍ تكراراً في العبادة، وأليقُ ما يمثّل دَيناً يُقضى على مهل.</p></div></div></div>\n\n    <div style=\"height:20px\"></div>\n  </div>\n  <button class=\"btn\" data-log=\"\" style=\"position:fixed;inset-block-end:88px;inset-inline-start:50%;transform:translateX(50%);\n    z-index:35;box-shadow:0 6px 24px rgba(0,0,0,.22)\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12 5.4v13.2M5.4 12h13.2\"></path></svg> سجّل قضاءً</button>","tabs":"\n    <button class=\"tab\" data-tab=\"#/home\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12.00 3.40L16.30 4.55L19.45 7.70L20.60 12.00L19.45 16.30L16.30 19.45L12.00 20.60L7.70 19.45L4.55 16.30L3.40 12.00L4.55 7.70L7.70 4.55Z\"></path><path d=\"M12 8.2v7.6M8.2 12h7.6\" opacity=\".45\"></path></svg><span>الرئيسيّة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/prayers\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M6 21v-9.2C6 8 8.7 5.2 12 5.2S18 8 18 11.8V21\"></path><path d=\"M4 21h16\"></path><path d=\"M12 5.2V3.2\"></path><path d=\"M9.6 21v-8.6a2.4 2.4 0 0 1 4.8 0V21\" opacity=\".45\"></path></svg><span>الصلاة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/knowledge\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12 6.4c-1.9-1.5-4-2.1-6.6-2.1v13c2.6 0 4.7.6 6.6 2.1 1.9-1.5 4-2.1 6.6-2.1v-13c-2.6 0-4.7.6-6.6 2.1Z\"></path><path d=\"M12 6.4v13\" opacity=\".45\"></path></svg><span>المعرفة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/will\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M6 3.2h8.4L18 6.8V17a3.8 3.8 0 0 1-3.8 3.8H6Z\"></path><path d=\"M14.4 3.2v3.6H18\" opacity=\".6\"></path><circle cx=\"12\" cy=\"14.2\" r=\"2.2\" opacity=\".6\"></circle><path d=\"M12 16.4v3\" opacity=\".45\"></path></svg><span>الوصيّة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/ihtidar\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12 21V6\"></path><path d=\"M12 9.2c0-2 1.6-3.6 4.2-4 .3 2.6-1.2 4.6-4.2 4.8Z\"></path><path d=\"M12 14c0-2-1.6-3.6-4.2-4-.3 2.6 1.2 4.6 4.2 4.8Z\" opacity=\".7\"></path></svg><span>الاحتضار</span><span class=\"tab-dot\"></span></button>","ground":""},"ihtidar":{"ar":"الاحتضار","view":"\n  \n  <header class=\"head\" style=\"\">\n    \n    \n    <div class=\"head-row\">\n      <button class=\"icon-btn\" data-back=\"\" aria-label=\"رجوع\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M9.6 6l6 6-6 6\"></path></svg></button>\n      <div class=\"grow\">\n        <span class=\"kicker-ar\">الاحتضار</span>\n        <h1 class=\"h1\" style=\"color:var(--head-ink);margin-top:2px\">ما يُفعل الآن</h1>\n        <p class=\"body soft\" style=\"margin-top:6px\">خطوةٌ واحدة في كلّ شاشة. يعمل بلا إنترنت.</p>\n      </div>\n      \n    </div>\n    \n  </header>\n  <div class=\"wrap lift\" style=\"padding-top:26px\">\n    <div class=\"row\" style=\"gap:10px;margin-bottom:26px\">\n      <span style=\"color:var(--acc);flex:none\"><svg viewBox=\"0 0 40 40\" width=\"40\" height=\"40\" aria-hidden=\"true\" focusable=\"false\" class=\"orn orn-jarida\">\n    <path d=\"M20 38C20 24 20 14 20 3.2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path>\n    <path d=\"M20 11.2Q12.8 7.2 8 10.4Q13.4 13.2 20 11.2Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" opacity=\".85\"></path><path d=\"M20 17.6Q26.12 13.6 30.2 16.8Q25.61 19.6 20 17.6Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" opacity=\".85\"></path><path d=\"M20 24Q14.96 20 11.6 23.2Q15.38 26 20 24Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" opacity=\".85\"></path><path d=\"M20 29.6Q23.96 25.6 26.6 28.8Q23.63 31.6 20 29.6Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" opacity=\".85\"></path>\n  </svg></span>\n      <p class=\"hint\" style=\"font-size:15px\">أعانك الله. خُذ نفساً. كلّ ما يلي مستحبّاتٌ وآداب، وما تعذّر منها فلا إثم فيه.</p>\n    </div>\n\n    <p class=\"kicker-ar\">الخطوة ١ من ٦</p>\n    <h2 class=\"display\" style=\"font-size:34px;margin-top:12px\">وجِّهه إلى القبلة</h2>\n    <p style=\"font-size:20px;line-height:1.85;margin-top:20px\">يُستحبّ أن يُوجَّه المحتضر إلى القبلة، مستلقياً على ظهره، وباطنُ قدميه نحوها. إن تعذّر ذلك لحالته، فلا حرج.</p>\n\n    <div class=\"steps\" style=\"margin-top:34px\"><i data-on=\"\"></i><i></i><i></i><i></i><i></i><i></i></div>\n\n    <div class=\"row\" style=\"gap:12px;margin-top:22px\">\n      <button class=\"btn btn-ghost\" data-prevstep=\"\" style=\"flex:1;min-height:56px\" disabled=\"\">السابق</button>\n      <button class=\"btn\" data-nextstep=\"\" style=\"flex:2;min-height:56px\">التالي</button>\n    </div>\n\n    <div style=\"margin-top:40px\">\n      <div class=\"rule\" style=\"opacity:.35\"></div>\n      <p class=\"hint\" style=\"margin-top:16px;font-size:15px\">هذه الصفحة محفوظة على هاتفك وتُفتح بلا شبكة. لا نحتفظ بسجلٍّ للأوقات التي فتحتَها فيها.</p>\n    </div>\n    <div style=\"height:40px\"></div>\n  </div>","tabs":"\n    <button class=\"tab\" data-tab=\"#/home\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12.00 3.40L16.30 4.55L19.45 7.70L20.60 12.00L19.45 16.30L16.30 19.45L12.00 20.60L7.70 19.45L4.55 16.30L3.40 12.00L4.55 7.70L7.70 4.55Z\"></path><path d=\"M12 8.2v7.6M8.2 12h7.6\" opacity=\".45\"></path></svg><span>الرئيسيّة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/prayers\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M6 21v-9.2C6 8 8.7 5.2 12 5.2S18 8 18 11.8V21\"></path><path d=\"M4 21h16\"></path><path d=\"M12 5.2V3.2\"></path><path d=\"M9.6 21v-8.6a2.4 2.4 0 0 1 4.8 0V21\" opacity=\".45\"></path></svg><span>الصلاة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/knowledge\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12 6.4c-1.9-1.5-4-2.1-6.6-2.1v13c2.6 0 4.7.6 6.6 2.1 1.9-1.5 4-2.1 6.6-2.1v-13c-2.6 0-4.7.6-6.6 2.1Z\"></path><path d=\"M12 6.4v13\" opacity=\".45\"></path></svg><span>المعرفة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/will\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M6 3.2h8.4L18 6.8V17a3.8 3.8 0 0 1-3.8 3.8H6Z\"></path><path d=\"M14.4 3.2v3.6H18\" opacity=\".6\"></path><circle cx=\"12\" cy=\"14.2\" r=\"2.2\" opacity=\".6\"></circle><path d=\"M12 16.4v3\" opacity=\".45\"></path></svg><span>الوصيّة</span><span class=\"tab-dot\"></span></button>\n    <button class=\"tab\" data-tab=\"#/ihtidar\" aria-current=\"page\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\" class=\"ic\"><path d=\"M12 21V6\"></path><path d=\"M12 9.2c0-2 1.6-3.6 4.2-4 .3 2.6-1.2 4.6-4.2 4.8Z\"></path><path d=\"M12 14c0-2-1.6-3.6-4.2-4-.3 2.6 1.2 4.6 4.2 4.8Z\" opacity=\".7\"></path></svg><span>الاحتضار</span><span class=\"tab-dot\"></span></button>","ground":"shroud"}},"palettes":[{"key":"zumurrud","ar":"الزمرّد","en":"Emerald","note":"الهويّة. أخضر قاشاني الحرم، والبطاقات بيضاء.","v":{"head":"linear-gradient(160deg,#0C6849,#0A5C42 70%,#08503A)","head-flat":"#0B6144","head-ink":"#FFFFFF","head-soft":"#ACE3CD","bg":"#F3F7F5","card":"#FFFFFF","card2":"#EDF4F0","ink":"#0F1F19","soft":"#485B53","line":"rgba(15,31,25,.13)","acc":"#0B6E4F","acc-ink":"#FFFFFF","rule":"#B08A34","grid":"rgba(15,31,25,.08)"},"flat":"#0B6144"},{"key":"fayruz","ar":"الفيروز","en":"Turquoise","note":"فيروز قاشان العتبات. أصغر سنّاً، وأكثر حياة.","v":{"head":"linear-gradient(160deg,#0A6A74,#085A63 70%,#074E56)","head-flat":"#09616A","head-ink":"#FFFFFF","head-soft":"#B2E8EE","bg":"#F1F7F8","card":"#FFFFFF","card2":"#E9F3F5","ink":"#0D1E21","soft":"#44575B","line":"rgba(13,30,33,.13)","acc":"#0A5F69","acc-ink":"#FFFFFF","rule":"#B08A34","grid":"rgba(13,30,33,.08)"},"flat":"#09616A"},{"key":"lazuward","ar":"اللازورد","en":"Lapis","note":"أزرق المخطوط وأحمر الفواصل. لونٌ للتنقّل، لا للزينة.","v":{"head":"linear-gradient(160deg,#254A97,#1A3672 70%,#152D61)","head-flat":"#1E3D7E","head-ink":"#FFFFFF","head-soft":"#C3D2F0","bg":"#F4F6FA","card":"#FFFFFF","card2":"#EBEFF8","ink":"#121826","soft":"#475169","line":"rgba(18,24,38,.13)","acc":"#1E3D7E","acc-ink":"#FFFFFF","rule":"#9C3A2E","grid":"rgba(18,24,38,.08)"},"flat":"#1E3D7E"},{"key":"nili","ar":"النيلي","en":"Indigo","note":"الأقرب إلى لغة الأدوات والقياس. هادئ، وحديث.","v":{"head":"linear-gradient(160deg,#4A3BA0,#332878 70%,#2B2166)","head-flat":"#3B2E85","head-ink":"#FFFFFF","head-soft":"#CBC4EE","bg":"#F6F5FB","card":"#FFFFFF","card2":"#EEEBF8","ink":"#161327","soft":"#504C6B","line":"rgba(22,19,39,.13)","acc":"#3F3193","acc-ink":"#FFFFFF","rule":"#B08A34","grid":"rgba(22,19,39,.08)"},"flat":"#3B2E85"},{"key":"yaqut","ar":"الياقوت","en":"Plum","note":"باذنجانيّ الخزف الصفويّ. غير مألوف، وراقٍ.","v":{"head":"linear-gradient(160deg,#7B3162,#5C2149 70%,#4E1B3E)","head-flat":"#6B2A55","head-ink":"#FFFFFF","head-soft":"#E6C4DA","bg":"#FAF4F8","card":"#FFFFFF","card2":"#F3E9F0","ink":"#22121D","soft":"#5C4553","line":"rgba(34,18,29,.13)","acc":"#6B2A55","acc-ink":"#FFFFFF","rule":"#B08A34","grid":"rgba(34,18,29,.08)"},"flat":"#6B2A55"},{"key":"sahra","ar":"الصحراء","en":"Clay","note":"لون التربة. الأنسب لشاشة القضاء.","v":{"head":"linear-gradient(160deg,#86462A,#733B23 70%,#63311D)","head-flat":"#7A3F26","head-ink":"#FFFFFF","head-soft":"#EECAB5","bg":"#FAF6F2","card":"#FFFFFF","card2":"#F3EBE3","ink":"#221710","soft":"#5A4536","line":"rgba(34,23,16,.13)","acc":"#7A3D24","acc-ink":"#FFFFFF","rule":"#8A6A22","grid":"rgba(34,23,16,.08)"},"flat":"#7A3F26"},{"key":"bronz","ar":"البرونز","en":"Bronze","note":"نحاس الأسطرلاب. لون الآلة نفسها.","v":{"head":"linear-gradient(160deg,#5C4E1D,#4A3E15 70%,#3D3311)","head-flat":"#514419","head-ink":"#FFFFFF","head-soft":"#D3C591","bg":"#F8F6EE","card":"#FFFDF7","card2":"#F1EDDF","ink":"#1E1B0E","soft":"#524B33","line":"rgba(30,27,14,.15)","acc":"#57491B","acc-ink":"#FFFFFF","rule":"#8A6A22","grid":"rgba(30,27,14,.09)"},"flat":"#514419"},{"key":"hibr","ar":"الحبر","en":"Ink","note":"الوضع الليليّ. فحميّ لا أسود — والأسود مكروه في غير الحداد.","v":{"head":"linear-gradient(160deg,#0F4A37,#0A3124 70%,#082A1F)","head-flat":"#0C3B2C","head-ink":"#F4FBF7","head-soft":"#9FCCB8","bg":"#14181B","card":"#1D2328","card2":"#252C32","ink":"#ECF1EE","soft":"#A7B6AF","line":"rgba(236,241,238,.16)","acc":"#57D8A2","acc-ink":"#07130E","rule":"#C8A24A","grid":"rgba(236,241,238,.10)"},"flat":"#0C3B2C"}],"grounds":{"doc":{"head":"linear-gradient(170deg,#E7E1D2,#DED7C5)","head-flat":"#E2DBCB","head-ink":"#1A1812","head-soft":"#4F4A3A","bg":"#EFEADD","card":"#FBF8F0","card2":"#F2EDE1","ink":"#1A1812","soft":"#4F4A3A","line":"rgba(26,24,18,.20)","acc":"#3A3325","acc-ink":"#FBF8F0","rule":"#8A7440","grid":"rgba(26,24,18,.10)"},"shroud":{"head":"linear-gradient(180deg,#FFFFFF,#FAFBFA)","head-flat":"#FFFFFF","head-ink":"#15181A","head-soft":"#4C5457","bg":"#FAFBFA","card":"#FFFFFF","card2":"#F3F5F4","ink":"#15181A","soft":"#4C5457","line":"rgba(21,24,26,.14)","acc":"#0B6E4F","acc-ink":"#FFFFFF","rule":"rgba(21,24,26,.14)","grid":"rgba(21,24,26,.07)"}},"built":["cards","shelves","path","ring","sheets","portal"],"layouts":[{"key":"manuscript","ar":"المخطوط","en":"Manuscript","family":"page","best":"الوصيّة","note":"عمود المتن وهامش ثابت، كصفحة مخطوط.","why":"للوصيّة: الوثيقة تُقرأ سطراً سطراً، والهامش يترك مكاناً للتعليق دون أن يقطع المتن."},{"key":"editorial","ar":"المجلة","en":"Editorial","family":"page","best":"المعرفة","note":"مساحات واسعة وعناوين كبيرة. الأهدأ، والأطول تمريراً.","why":"للمعرفة: الدرس يحتاج نَفَساً طويلاً، والبياض حول العنوان هو ما يجعل القراءة ممكنة."},{"key":"khat","ar":"الخط","en":"Calligraphy","family":"page","best":"الاحتضار","note":"بلا بطاقات. الخطّ وحده يحمل الترتيب.","why":"للاحتضار: لا إطار ولا صندوق. في تلك الساعة كلّ حدٍّ مرسوم زيادة."},{"key":"cards","ar":"البطاقات","en":"Cards","family":"grid","best":"","note":"المرجع الذي تُقاس عليه البقيّة.","why":"للرئيسيّة: لا شيء أهمّ من شيء. البطاقات متساوية فتُقارَن، ولا تُرتَّب نيابةً عن صاحبها."},{"key":"bento","ar":"الشبكة","en":"Bento","family":"grid","best":"الرئيسيّة","note":"عمودان، وبطاقة واحدة كبيرة تتصدّر.","why":"للرئيسيّة: بطاقة واحدة تتصدّر لأنّ لليوم عملاً واحداً أوّل، والباقي تحتها."},{"key":"shelves","ar":"الرفوف","en":"Shelves","family":"grid","best":"المعرفة","note":"صفّ لكلّ مجموعة، يُمرَّر أفقيّاً.","why":"للمعرفة: ما كان مجموعةً يُمرَّر عرضاً. ولا يصلح للقضاء، فإخفاء دَينٍ خارج الشاشة إخفاءٌ له."},{"key":"register","ar":"السجل","en":"Register","family":"dense","best":"القضاء","note":"أسطر متتابعة وأرقام على الطرف.","why":"للقضاء: سجلٌّ لا بطاقات. الأرقام على عمود واحد فتُجمع بالنظر، والدَّين كلّه ظاهر."},{"key":"path","ar":"المسار","en":"Path","family":"dense","best":"الصلاة","note":"خطّ رأسيّ وعُقَد مرقّمة. اليوم كمسار، وعليه علامة الآن.","why":"للصلاة: التخطيط الوحيد الذي يقول أين أنت، لا ماذا يوجد. والعُقدة المضيئة هي الآن."},{"key":"ring","ar":"الحلقة","en":"Ring","family":"dense","best":"القضاء","note":"رقم واحد كبير في الأعلى، والبقيّة أبواب تحته.","why":"للقضاء: رقمٌ واحد في حلقة، وتحته أبواب للعمل. يصلح حين يكون العدد هو الرسالة كلّها."},{"key":"portal","ar":"المنبر","en":"Portal","family":"form","best":"الوصيّة","note":"أقواس حقيقيّة لا زوايا مستديرة. لا يشبه أيّ تطبيق آخر.","why":"للوصيّة والاحتضار: سجلٌّ احتفاليّ. القوس عمارة لا زخرفة، وهو ما ينقل المقام."},{"key":"sheets","ar":"الطبقات","en":"Sheets","family":"form","best":"الرئيسيّة","note":"خلفيّة ثابتة ومحتوى يعلوها كطبقة.","why":"للرئيسيّة: عمق لا ترتيب. اللون يبقى أرضاً، والقراءة كلّها على سطحٍ أبيض فوقه."},{"key":"brut","ar":"الحاد","en":"Hard Edge","family":"form","best":"المعرفة","note":"حدود سميكة وظلال حادّة. الأوضح لمن يصعب عليه النظر.","why":"لمن ضعف بصره، في أيّ وحدة: الحدّ السميك يفصل ما لا يفصله اللون وحده."}]};
+const FAM = {"page":"صفحة","grid":"شبكة","dense":"كثيف","form":"هيئة"};
+let L='bento', P='zumurrud', SCR='home';
+
+function vars(el, pk, ground){
+  const p = D.palettes.find(x=>x.key===pk);
+  const v = ground ? D.grounds[ground] : p.v;
+  for (const k in v) el.style.setProperty('--'+k, v[k]);
+}
+function phone(layout, pk, scr){
+  const s = D.screens[scr];
+  const el = document.createElement('div');
+  el.className='phone'; el.dir='rtl';
+  el.dataset.layout=layout; el.dataset.surface='glass'; el.dataset.quran='on';
+  if (s.ground) el.dataset.ground=s.ground;
+  vars(el, pk, s.ground);
+  el.innerHTML='<div class="view-scroll"><main class="app"><div class="view">'+s.view+
+    '</div></main><nav class="tabs">'+s.tabs+'</nav></div>';
+  el.querySelectorAll('a,button,input,select,textarea').forEach(n=>n.tabIndex=-1);
+  return el;
+}
+function chip(on, inner, onClick){
+  const b=document.createElement('button');
+  b.className='gx-chip'; b.type='button'; b.setAttribute('aria-pressed', on?'true':'false');
+  b.innerHTML=inner; b.addEventListener('click', onClick); return b;
+}
+function render(){
+  const cl=document.getElementById('cl'); cl.innerHTML='';
+  D.layouts.forEach(l=>cl.appendChild(chip(l.key===L,
+    (D.built.includes(l.key)?'<span class="gx-new"></span>':'')+l.ar+'<span class="gx-en">'+l.en+'</span>',
+    ()=>{L=l.key;render();})));
+  const cp=document.getElementById('cp'); cp.innerHTML='';
+  D.palettes.forEach(p=>cp.appendChild(chip(p.key===P,
+    '<span class="gx-sw" style="background:'+p.flat+'"></span>'+p.ar, ()=>{P=p.key;render();})));
+  const cs=document.getElementById('cs'); cs.innerHTML='';
+  Object.entries(D.screens).forEach(([k,s])=>cs.appendChild(chip(k===SCR, s.ar, ()=>{SCR=k;render();})));
+
+  const l=D.layouts.find(x=>x.key===L);
+  document.getElementById('why').innerHTML =
+    '<div class="gx-ttl"><b>'+l.ar+'</b><span class="gx-meta">'+l.en+' · '+FAM[l.family]+
+    (l.best?' · '+l.best:'')+'</span>'+
+    (D.built.includes(l.key)?'<span class="gx-flag"><i></i>built today</span>':'')+'</div>'+
+    '<p>'+l.why+'</p><p class="gx-note">'+l.note+'</p>';
+
+  const st=document.getElementById('stage'); st.innerHTML=''; st.appendChild(phone(L,P,SCR));
+
+  const sh=document.getElementById('sheet'); sh.innerHTML='';
+  D.layouts.forEach(x=>{
+    const b=document.createElement('button');
+    b.className='gx-mini'; b.type='button'; b.setAttribute('aria-pressed', x.key===L?'true':'false');
+    const w=document.createElement('div'); w.className='gx-win'; w.appendChild(phone(x.key,P,SCR));
+    const c=document.createElement('div'); c.className='gx-cap';
+    c.innerHTML=(D.built.includes(x.key)?'<span class="gx-new" style="width:6px;height:6px;border-radius:50%;background:var(--warn)"></span>':'')+
+      '<b>'+x.ar+'</b><span class="gx-en">'+x.en+'</span>';
+    b.appendChild(w); b.appendChild(c);
+    b.addEventListener('click',()=>{L=x.key;render();window.scrollTo({top:0,behavior:'smooth'});});
+    sh.appendChild(b);
+  });
+}
+render();
+</script>
