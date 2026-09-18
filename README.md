@@ -128,6 +128,6 @@ Contains no Qurʾānic text in any image, icon or exportable card.
 
 ## Single-file builds
 
-`dist/awda-prototype.single.html` and `dist/awda-direction.single.html` are self-contained
-bundles of the two pages — one file each, fonts from Google Fonts, no server needed. Open
-either one directly in a browser, or email it to someone.
+`node scripts/build-single.mjs` bundles the prototype into one self-contained
+`dist/awda-prototype.single.html` — fonts from Google Fonts, no server needed. Open it
+directly in a browser, or email it to someone. Needs `npx esbuild`.
